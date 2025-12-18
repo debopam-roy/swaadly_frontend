@@ -1,0 +1,83 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+.next
+out
+build
+dist
+
+# Production
+/build
+
+# Testing
+coverage
+.nyc_output
+
+# Cache
+.cache
+.parcel-cache
+.eslintcache
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Public/Static assets
+public
+static
+
+# Vercel
+.vercel
+
+# Documentation
+CHANGELOG.md
+
+# Generated files
+*.min.js
+*.min.css
+
+# Storybook
+storybook-static
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Supabase
+.supabase
+
+# Sentry
+.sentryclirc
+
+# Misc
+*.log
+.git

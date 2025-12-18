@@ -1,0 +1,84 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { OtpAuthForm } from './otp-auth-form';
+import { phoneAuthService } from '@/lib';
+
+/**
+ * Phone Authentication Flow Component
+ *
+ * Follows SOLID principles:
+ * - Single Responsibility: Handles phone auth logic only
+ * - Dependency Inversion: Uses injected service
+ *
+ * Follows YAGNI: Only implements what's needed for phone auth
+ */
+
+interface PhoneAuthFlowProps {
+  onSuccess?: () => void;
+  onError?: (error: Error) => void;
+}
+
+export function PhoneAuthFlow({ onSuccess, onError }: PhoneAuthFlowProps) {
+  const router = useRouter();
+
+  // Phone validation (E.164 format)
+  const validatePhone = (phone: string): string | null => {
+    if (!phone) {
+      return 'Phone number is required';
+    }
+
+    // Remove spaces and dashes for validation
+    const cleanPhone = phone.replace(/[\s-]/g, '');
+
+    // Check E.164 format: +[country code][number]
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      return 'Please enter a valid phone number with country code (e.g., +919876543210)';
+    }
+
+    return null;
+  };
+
+  // Request OTP handler
+  const handleRequestOtp = async (phone: string) => {
+    try {
+      // Clean phone number
+      const cleanPhone = phone.replace(/[\s-]/g, '');
+      await phoneAuthService.requestPhoneOtp(cleanPhone);
+    } catch (error: any) {
+      const err = new Error(error.response?.data?.message || error.message || 'Failed to send OTP');
+      onError?.(err);
+      throw err;
+    }
+  };
+
+  // Verify OTP handler
+  const handleVerifyOtp = async (phone: string, otp: string) => {
+    try {
+      // Clean phone number
+      const cleanPhone = phone.replace(/[\s-]/g, '');
+      await phoneAuthService.verifyPhoneOtp({ phone: cleanPhone, otp });
+
+      // Success - redirect to dashboard
+      onSuccess?.();
+      router.push('/');
+    } catch (error: any) {
+      const err = new Error(error.response?.data?.message || error.message || 'Invalid OTP');
+      onError?.(err);
+      throw err;
+    }
+  };
+
+  return (
+    <OtpAuthForm
+      title="Sign in with Phone"
+      inputLabel="Phone Number"
+      inputPlaceholder="+919876543210"
+      inputType="tel"
+      validateInput={validatePhone}
+      onRequestOtp={handleRequestOtp}
+      onVerifyOtp={handleVerifyOtp}
+    />
+  );
+}
