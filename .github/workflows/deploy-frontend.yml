@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '24'
 
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: yarn global add vercel@latest
 
       - name: Pull Vercel Environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
