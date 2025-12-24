@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { CartItem as CartItemType } from '@/lib/types/cart.types';
+import { useDeviceType } from '@/lib/hooks/use-device-type';
 import StarRating from '@/components/product/StarRating';
 
 interface CartItemProps {
@@ -12,11 +13,21 @@ interface CartItemProps {
 
 export default function CartItem({ item, onQuantityChange, onRemove }: CartItemProps) {
   const { product, variant, quantity } = item;
-  const primaryImage = product.images?.find((img) => img.isPrimary) || product.images?.[0];
+  const deviceType = useDeviceType();
+
+  // Use cart-specific images based on device type, fallback to product images
+  const cartImage = product.cartImages?.find((img) => img.deviceType === deviceType)
+    || product.cartImages?.[0];
+  const fallbackImage = product.images?.find((img) => img.isPrimary) || product.images?.[0];
+  const displayImage = cartImage || fallbackImage;
+
+  const rating = product.averageRating ?? 0;
 
   const handleDecrease = () => {
     if (quantity > 1) {
       onQuantityChange(item.id, quantity - 1);
+    } else {
+      onRemove(item.id);
     }
   };
 
@@ -27,64 +38,91 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
   };
 
   return (
-    <div className="bg-[#333333] flex flex-col md:flex-row overflow-hidden">
-      {/* Product Image */}
-      <div className="w-full md:w-1/2 relative aspect-square md:aspect-auto md:h-auto">
-        {primaryImage && (
-          <Image
-            src={primaryImage.imageUrl}
-            alt={primaryImage.altText || product.name}
-            fill
-            className="object-cover"
-          />
-        )}
+    <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+      {/* Product Image Container */}
+      <div className="w-full md:w-[40%] relative">
+        <div className="aspect-[2/1] md:aspect-[3/2] relative">
+          {displayImage && (
+            <Image
+              src={displayImage.imageUrl}
+              alt={displayImage.altText || product.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          )}
+        </div>
       </div>
 
       {/* Product Details */}
-      <div className="w-full md:w-1/2 bg-white p-6 md:p-8 flex flex-col gap-4">
-        <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-[#333333] leading-tight">
+      <div className="w-full md:w-[60%] p-4 md:p-5 lg:p-6 flex flex-col justify-start gap-1 md:gap-1.5 bg-white relative">
+        {/* Delete Button */}
+        <button
+          onClick={() => onRemove(item.id)}
+          className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+          aria-label="Remove item from cart"
+        >
+          <Image
+            src="/images/delete.svg"
+            alt="Delete"
+            width={18}
+            height={18}
+            className="md:w-5 md:h-5 text-gray-500"
+          />
+        </button>
+
+        {/* Product Name */}
+        <h3 className="text-lg md:text-xl lg:text-3xl font-medium leading-tight">
           {product.name}
+          {variant.weight && (
+            <span className="text-base md:text-lg lg:text-xl"> ({variant.weight}{variant.weightUnit})</span>
+          )}
         </h3>
 
-        <StarRating
-          rating={product.averageRating}
-          totalReviews={product.totalReviews}
-          showNumber
-          size="sm"
-        />
+        {/* Star Rating */}
+        <StarRating rating={rating} size="sm" showNumber={true} />
 
-        <p className="text-lg md:text-xl font-light text-[#333333]">
+        {/* Delivery Info */}
+        <p className=" text-[#666666]">
           Delivery in 7 days
         </p>
 
-        <p className="text-2xl md:text-3xl lg:text-4xl font-medium text-[#333333]">
+        {/* Price */}
+        <p className="text-xl md:text-2xl lg:text-3xl font-medium ">
           ₹{variant.sellingPrice}
         </p>
 
         {/* Quantity Selector */}
-        <div className="flex items-center gap-4 md:gap-8">
-          <span className="text-xl md:text-2xl lg:text-3xl font-medium text-[#333333]">
+        <div className="flex items-center gap-2 md:gap-x-4">
+          <span className="text-sm md:text-base font-medium ">
             Quantity
           </span>
-          <div className="flex items-center bg-[rgba(51,51,51,0.1)] rounded-[40px] px-4 py-3 gap-4 flex-1 md:flex-none md:min-w-[180px]">
+          <div className="flex items-center bg-[#F5F5F5] rounded-full w-2/3 justify-between">
             <button
               onClick={handleDecrease}
-              disabled={quantity <= 1}
-              className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center disabled:opacity-30"
-              aria-label="Decrease quantity"
+              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
+              aria-label={quantity === 1 ? "Remove item" : "Decrease quantity"}
             >
-              <Image src="/images/remove.svg" alt="Decrease" width={24} height={24} />
+              <Image
+                src={quantity === 1 ? "/images/delete.svg" : "/images/remove.svg"}
+                alt={quantity === 1 ? "Remove" : "Decrease"}
+                width={16}
+                height={16}
+                className="md:w-5 md:h-5"
+              />
             </button>
-            <span className="flex-1 text-center text-lg md:text-xl font-medium text-[#333333]">
+
+            <span className="w-8 md:w-10 text-center text-sm md:text-base font-medium ">
               {quantity}
             </span>
+
             <button
               onClick={handleIncrease}
               disabled={quantity >= variant.stockQuantity}
-              className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center disabled:opacity-30"
+              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center disabled:opacity-40 cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
               aria-label="Increase quantity"
             >
-              <Image src="/images/add.svg" alt="Increase" width={24} height={24} />
+              <Image src="/images/add.svg" alt="Increase" width={16} height={16} className="md:w-5 md:h-5" />
             </button>
           </div>
         </div>

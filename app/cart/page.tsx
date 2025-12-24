@@ -1,46 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useCart } from '@/lib/contexts/cart.context';
-import { productsService } from '@/lib/services/products.service';
-import type { Product } from '@/lib/types/product.types';
 import type { CartSummary } from '@/lib/types/cart.types';
 import CartItem from '@/components/cart/CartItem';
 import CouponSection from '@/components/cart/CouponSection';
 import PriceDetails from '@/components/cart/PriceDetails';
-import ProductCard from '@/components/product/ProductCard';
+import ExploreOtherProducts from '@/components/product/ExploreOtherProducts';
 
 export default function CartPage() {
   const router = useRouter();
-  const { items: cartItems, updateQuantity, removeItem, addToCart } = useCart();
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const { items: cartItems, updateQuantity, removeItem } = useCart();
   const [appliedCoupon, setAppliedCoupon] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-
-        // Fetch related/other products
-        const response = await productsService.getProducts({
-          isActive: true,
-          limit: 3,
-          sortBy: 'totalSales',
-          sortOrder: 'desc',
-        });
-        setRelatedProducts(response.products);
-      } catch (error) {
-        console.error('Failed to fetch cart data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
     updateQuantity(itemId, newQuantity);
@@ -55,14 +28,11 @@ export default function CartPage() {
     // TODO: Validate and apply coupon logic
   };
 
-  const handleAddToCart = (productId: string) => {
-    const product = relatedProducts.find((p) => p.id === productId);
-    if (product) {
-      const defaultVariant = product.variants?.find((v) => v.isDefault) || product.variants?.[0];
-      if (defaultVariant) {
-        addToCart(product, defaultVariant, 1);
-      }
-    }
+  const handleAddToCart = async (productId: string) => {
+    // The ExploreOtherProducts component will pass the product ID
+    // We need to fetch the product details to add it to cart
+    // For now, we'll let the ProductCard component handle navigation to product page
+    console.log('Add to cart:', productId);
   };
 
   const handleBuyNow = () => {
@@ -94,16 +64,8 @@ export default function CartPage() {
 
   const summary = calculateSummary();
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C68642] mx-auto"></div>
-          <p className="mt-4 text-[#333333]">Loading cart...</p>
-        </div>
-      </div>
-    );
-  }
+  // Get IDs of products already in cart for filtering
+  const cartProductIds = cartItems.map(item => item.product.id);
 
   return (
     <main className="min-h-screen bg-[#F5E6D3]">
@@ -176,45 +138,12 @@ export default function CartPage() {
       </section>
 
       {/* Explore Other Products */}
-      <section>
-        <div className="relative overflow-hidden py-12 md:py-16">
-          {/* Background Image */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <Image
-              src="/images/behind_prism.svg"
-              alt=""
-              fill
-              className="object-cover rotate-180 scale-y-[-1]"
-            />
-          </div>
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 md:mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-[#333333]">
-                Explore other products
-              </h2>
-              <button
-                onClick={() => router.push('/')}
-                className="bg-white border-2 border-[#333333] px-12 md:px-16 py-3 md:py-4 rounded-full text-base md:text-lg font-bold text-[#333333] hover:bg-[#F5EDE0] transition-colors"
-              >
-                VIEW ALL
-              </button>
-            </div>
-
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {relatedProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ExploreOtherProducts
+        excludeProductIds={cartProductIds}
+        title="Explore other products"
+        viewAllUrl="/"
+        onAddToCart={handleAddToCart}
+      />
 
       {/* Banner Image */}
       <section>

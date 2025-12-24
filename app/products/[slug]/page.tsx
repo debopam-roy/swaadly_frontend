@@ -8,7 +8,7 @@ import type { Product } from '@/lib/types/product.types';
 import ProductImageGallery from '@/components/product/ProductImageGallery';
 import ProductInfo from '@/components/product/ProductInfo';
 import ProductReviews from '@/components/product/ProductReviews';
-import ProductCard from '@/components/product/ProductCard';
+import ExploreOtherProducts from '@/components/product/ExploreOtherProducts';
 
 // Mock reviews data - Replace with actual API call
 const mockReviews = [
@@ -36,7 +36,6 @@ export default function ProductPage() {
   const slug = params.slug as string;
 
   const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -47,14 +46,6 @@ export default function ProductPage() {
         setError(null);
         const data = await productsService.getProductBySlug(slug);
         setProduct(data);
-
-        // Fetch related products
-        const response = await productsService.getProducts({
-          isActive: true,
-          limit: 3
-        });
-        const related = response.products.filter((p) => p.id !== data.id).slice(0, 3);
-        setRelatedProducts(related);
       } catch (err) {
         console.error('Failed to fetch product:', err);
         setError('Failed to load product. Please try again later.');
@@ -77,11 +68,6 @@ export default function ProductPage() {
     // TODO: Implement buy now logic
     console.log('Buy now:', variantId, quantity);
     router.push('/checkout');
-  };
-
-  const handleAddRelatedToCart = (productId: string) => {
-    // TODO: Implement add to cart for related products
-    console.log('Add related product to cart:', productId);
   };
 
   if (isLoading) {
@@ -146,103 +132,80 @@ export default function ProductPage() {
       </section>
 
       {/* About Section */}
-      <section className=" min-h-screen">
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full">
-          
-          {/* About Text */}
-          <div className="flex flex-col gap-6 md:gap-8 bg-white p-6 md:p-12 h-full">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#333333]">
-              About this product
-            </h2>
-            <div className="flex flex-col gap-4 text-base md:text-lg text-[#333333] leading-relaxed">
-              <p>{product.longDescription || product.shortDescription}</p>
-              {product.usageInstructions && <p>{product.usageInstructions}</p>}
+      {product.aboutProduct && (
+        <section className=" min-h-screen">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full">
+
+            {/* About Text */}
+            <div className="flex flex-col gap-6 md:gap-8 bg-white p-6 md:p-12 h-full">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#333333]">
+                About this product
+              </h2>
+              <div className="flex flex-col gap-4 text-base md:text-lg text-[#333333] leading-relaxed">
+                <p>{product.aboutProduct}</p>
+              </div>
             </div>
-          </div>
 
-          {/* About Image */}
-          <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden">
-            <Image
-              src="/images/peanut_butter.svg"
-              alt="Product details"
-              fill
-              className="object-cover"
-            />
-          </div>
+            {/* About Image */}
+            <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden">
+              <Image
+                src="/images/peanut_butter.svg"
+                alt="Product details"
+                fill
+                className="object-cover"
+              />
+            </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* Best Ways to Eat Section */}
-      <section className="min-h-screen">
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full">
-          
-          {/* Image First on Mobile, Text on Desktop */}
-          <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden order-2 lg:order-1">
-            <Image
-              src="/images/best_way_to_eat.svg"
-              alt="Best ways to eat"
-              fill
-              className="object-cover"
-            />
-          </div>
-          {/* Text */}
-          <div className="flex flex-col gap-6 md:gap-8 bg-primary_button p-6 md:p-12 h-full order-1 lg:order-2">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#333333]">
-              Best ways to eat
-            </h2>
-            <div className="flex flex-col gap-4 text-base md:text-lg text-[#333333] leading-relaxed">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-              <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
+      {product.bestWayToEat && (
+        <section className="min-h-screen">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full">
+
+            {/* Image First on Mobile, Text on Desktop */}
+            <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden order-2 lg:order-1">
+              <Image
+                src={product.bestWayToEatImageUrl || "/images/best_way_to_eat.svg"}
+                alt="Best ways to eat"
+                fill
+                className="object-cover"
+              />
+            </div>
+            {/* Text */}
+            <div className="flex flex-col gap-6 md:gap-8 bg-primary_button p-6 md:p-12 h-full order-1 lg:order-2">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#333333]">
+                Best ways to eat
+              </h2>
+              <div className="flex flex-col gap-4 text-base md:text-lg text-[#333333] leading-relaxed">
+                <p>{product.bestWayToEat}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Related Products */}
-<section
-  className="relative overflow-hidden min-h-screen bg-cover bg-no-repeat bg-center"
-  style={{ backgroundImage: "url('/images/products_background.svg')" }}
->
-
-  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-    <div className="flex items-center justify-center md:justify-between gap-4 mb-10 md:mb-12 flex-wrap">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#333333]">
-        Explore other products
-      </h2>
-      <button
-        onClick={() => router.push('/products')}
-        className="bg-white border-2 border-[#333333] px-12 md:px-16 py-3 md:py-4 rounded-full text-base md:text-lg font-bold text-[#333333] hover:bg-[#F5EDE0] transition-colors"
-      >
-        VIEW ALL
-      </button>
-    </div>
-
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {relatedProducts.map((relatedProduct) => (
-        <ProductCard
-          key={relatedProduct.id}
-          product={relatedProduct}
-          onAddToCart={handleAddRelatedToCart}
+      {product && (
+        <ExploreOtherProducts
+          excludeProductIds={[product.id]}
+          title="Explore other products"
+          viewAllUrl="/products"
+          backgroundImage="/images/products_background.svg"
+          className="min-h-screen"
         />
-      ))}
-    </div>
-  </div>
-</section>
+      )}
 
 
       {/* Reviews Section */}
-      <ProductReviews
+      {/* TODO: Implement reviews when backend API is ready */}
+      {/* <ProductReviews
         reviews={mockReviews}
-        totalReviews={product.totalReviews}
-        averageRating={product.averageRating}
-      />
+        totalReviews={0}
+        averageRating={0}
+      /> */}
     </main>
   );
 }

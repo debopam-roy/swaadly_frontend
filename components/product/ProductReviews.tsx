@@ -32,7 +32,7 @@ export default function ProductReviews({ reviews, totalReviews, averageRating }:
                 <div className="flex items-center gap-4">
                   <div className="w-8 h-8 bg-[#F5EDE0] rounded-full flex items-center justify-center">
                     <Image
-                      src="/images/account.svg"
+                      src="/images/progile.svg"
                       alt="User"
                       width={20}
                       height={20}

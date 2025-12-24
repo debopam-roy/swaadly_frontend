@@ -1,15 +1,27 @@
 import type { Metadata } from "next";
-import { Inter, Shrikhand } from "next/font/google";
+import { Shrikhand } from "next/font/google";
+import localFont from "next/font/local";
+import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "@/lib/contexts/auth.context";
 import { CartProvider } from "@/lib/contexts/cart.context";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const satoshi = localFont({
+  src: [
+    { path: "../public/fonts/satoshi/Satoshi-Light.otf", weight: "300", style: "normal" },
+    { path: "../public/fonts/satoshi/Satoshi-LightItalic.otf", weight: "300", style: "italic" },
+    { path: "../public/fonts/satoshi/Satoshi-Regular.otf", weight: "400", style: "normal" },
+    { path: "../public/fonts/satoshi/Satoshi-Italic.otf", weight: "400", style: "italic" },
+    { path: "../public/fonts/satoshi/Satoshi-Medium.otf", weight: "500", style: "normal" },
+    { path: "../public/fonts/satoshi/Satoshi-MediumItalic.otf", weight: "500", style: "italic" },
+    { path: "../public/fonts/satoshi/Satoshi-Bold.otf", weight: "700", style: "normal" },
+    { path: "../public/fonts/satoshi/Satoshi-BoldItalic.otf", weight: "700", style: "italic" },
+    { path: "../public/fonts/satoshi/Satoshi-Black.otf", weight: "900", style: "normal" },
+    { path: "../public/fonts/satoshi/Satoshi-BlackItalic.otf", weight: "900", style: "italic" },
+  ],
+  variable: "--font-satoshi",
 });
 
 const shrikhand = Shrikhand({
@@ -30,8 +42,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-DQ2H5Z5WNM"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DQ2H5Z5WNM');
+          `}
+        </Script>
+      </head>
       <body
-        className={`${inter.variable} ${shrikhand.variable} antialiased`}
+        className={`${satoshi.variable} ${shrikhand.variable} antialiased`}
       >
         <AuthProvider>
           <CartProvider>

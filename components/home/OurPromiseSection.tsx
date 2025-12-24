@@ -7,30 +7,28 @@ export default function OurPromiseSection() {
     {
       text: (
         <>
-          Affordable yet <span className="text-[#28a777]">premium</span>
+          <span className="text-primary_button">Authentic</span> roasted peanut taste
         </>
       ),
     },
     {
       text: (
         <>
-          <span className="text-[#28a777]">No</span> BS ingredients
+          Clean Label, <span className="text-[#28a777]">Full Flavour</span>
         </>
       ),
     },
     {
       text: (
         <>
-          <span className="text-[#28a777]">Honest</span> label,{' '}
-          <span className="text-[#28a777]">honest</span> food
+          Only <span className="text-[#28a777]">ingredients</span> that matters
         </>
       ),
     },
     {
       text: (
         <>
-          Healthy taste for <span className="text-[#28a777]">everyone</span>{' '}
-          (not just gym freaks)
+          Healthy taste for <span className="text-[#28a777]">everyone</span>
         </>
       ),
     },
@@ -48,8 +46,8 @@ export default function OurPromiseSection() {
         />
 
         {/* Gradient Overlays */}
-        <div className="absolute top-0 left-0 right-0 h-[357px] bg-gradient-to-b from-white to-transparent backdrop-blur-[0.5px]" />
-        <div className="absolute bottom-0 left-0 right-0 h-[177px] bg-gradient-to-t from-white to-transparent backdrop-blur-[0.5px]" />
+        <div className="absolute top-0 left-0 right-0 h-[357px] bg-linear-to-b from-white to-transparent backdrop-blur-[0.5px]" />
+        <div className="absolute bottom-0 left-0 right-0 h-[177px] bg-linear-to-t from-white to-transparent backdrop-blur-[0.5px]" />
         <div
           className="absolute top-0 right-0 bottom-0 w-[253px]"
           style={{
@@ -61,11 +59,11 @@ export default function OurPromiseSection() {
       {/* Right Side - Content */}
       <div className="flex-1 bg-white px-[60px] py-[120px] flex items-center">
         <div className="flex flex-col gap-10 w-full">
-          <h2 className="font-bold text-[#28a777] text-[100px] leading-[104px]">
+          <p className="font-extralight font-display text-primary_button text-8xl leading-[104px]">
             Our Promise
-          </h2>
+          </p>
 
-          <ul className="flex flex-col gap-8 text-[40px] leading-[44px] font-medium text-[rgba(51,51,51,0.8)]">
+          <ul className="flex flex-col gap-8 text-[40px] leading-11 font-medium text-[rgba(51,51,51,0.8)]">
             {promises.map((promise, index) => (
               <li key={index} className="flex items-start">
                 <span className="mr-4">•</span>

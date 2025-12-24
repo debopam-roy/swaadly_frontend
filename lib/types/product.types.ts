@@ -3,11 +3,10 @@ export interface ProductVariant {
   sku: string;
   weight: number;
   weightUnit: string;
+  proteinQuantity?: number;
   mrp: number;
   sellingPrice: number;
   discountPercentage: number;
-  couponCode?: string;
-  couponAppliedPrice?: number;
   stockQuantity: number;
   isAvailable: boolean;
   isDefault: boolean;
@@ -16,35 +15,36 @@ export interface ProductVariant {
 export interface ProductImage {
   id: string;
   imageUrl: string;
-  thumbnailUrl?: string;
+  deviceType: 'DESKTOP' | 'MOBILE';
   altText?: string;
   isPrimary: boolean;
   displayOrder: number;
+}
+
+export interface ProductCartImage {
+  id: string;
+  imageUrl: string;
+  deviceType: 'DESKTOP' | 'MOBILE';
+  altText?: string;
 }
 
 export interface Product {
   id: string;
   name: string;
   slug: string;
+  flavor?: string;
   brand: string;
-  shortDescription?: string;
-  longDescription?: string;
-  productType?: string;
+  aboutProduct?: string;
+  bestWayToEat?: string;
+  bestWayToEatImageUrl?: string;
   tags: string[];
-  proteinPer100g?: number;
-  caloriesPer100g?: number;
-  nutritionalInfo?: any;
-  features?: any;
-  usageInstructions?: string;
   isActive: boolean;
-  isFeatured: boolean;
-  totalSales: number;
-  totalReviews: number;
-  averageRating: number;
-  viewCount: number;
   displayOrder: number;
+  averageRating?: number;
+  totalReviews?: number;
   variants?: ProductVariant[];
   images?: ProductImage[];
+  cartImages?: ProductCartImage[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -59,11 +59,9 @@ export interface ProductsResponse {
 
 export interface ProductQueryParams {
   search?: string;
-  productType?: string;
   tag?: string;
-  isFeatured?: boolean;
   isActive?: boolean;
-  sortBy?: 'createdAt' | 'name' | 'price' | 'averageRating' | 'totalSales' | 'displayOrder';
+  sortBy?: 'createdAt' | 'name' | 'displayOrder';
   sortOrder?: 'asc' | 'desc';
   page?: number;
   limit?: number;

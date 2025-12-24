@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Product, ProductVariant } from '@/lib/types/product.types';
 import { useCart } from '@/lib/contexts/cart.context';
-import StarRating from './StarRating';
 import QuantitySelector from './QuantitySelector';
 
 interface ProductInfoProps {
@@ -45,18 +45,45 @@ export default function ProductInfo({ product, onAddToCart, onBuyNow }: ProductI
   };
 
   const discountAmount = selectedVariant?.mrp - selectedVariant?.sellingPrice;
-  const hasCoupon = selectedVariant?.couponCode && selectedVariant?.couponAppliedPrice;
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+    } catch (err) {
+      console.error('Failed to copy URL:', err);
+    }
+  };
+
+  // Use actual product rating from backend (defaults to 0.0 if not available)
+  const rating = product.averageRating || 0.0;
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
   return (
     <div className="flex flex-col gap-4 md:gap-6">
       {/* Product Name */}
-      <p className="text-2xl md:text-4xl font-semibold">{product.name}</p>
+      <div className='flex items-center justify-between'>
+        <div>
+          <p className="text-3xl md:text-5xl font-semibold">
+            {product.name}
+          </p>
+        </div>
+
+        <button
+          onClick={handleShare}
+          className="w-10 h-10 cursor-pointer"
+          aria-label="Share product"
+        >
+          <Image src="/images/share.svg" alt="Share" width={28} height={28} />
+        </button>
+      </div>
 
       {/* Product Details */}
       <div className="flex items-center gap-4 flex-wrap text-base md:text-2xl">
-        {product.proteinPer100g && (
+        {selectedVariant?.proteinQuantity && (
           <>
-            <span>Protein {product.proteinPer100g}g</span>
+            <span>Protein {selectedVariant.proteinQuantity}g</span>
             <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
           </>
         )}
@@ -69,39 +96,62 @@ export default function ProductInfo({ product, onAddToCart, onBuyNow }: ProductI
       </div>
 
       {/* Rating */}
-      <StarRating
-        rating={product.averageRating}
-        totalReviews={product.totalReviews}
-      />
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5">
+          {/* Filled Stars */}
+          {Array.from({ length: fullStars }).map((_, i) => (
+            <div key={`filled-${i}`} className="w-6 h-6 md:w-8 md:h-8 relative">
+              <Image
+                src="/images/filled_star.svg"
+                alt=""
+                fill
+                className="object-contain"
+              />
+            </div>
+          ))}
 
-      {/* Pricing with Coupon */}
-      {hasCoupon && (
-        <div className="flex flex-col gap-3">
-          <p className="text-sm md:text-base text-[#44c997] font-medium">
-            Coupon code &quot;{selectedVariant.couponCode}&quot; applied
-          </p>
+          {/* Half Star (shown as empty for partial ratings) */}
+          {hasHalfStar && (
+            <div className="w-6 h-6 md:w-8 md:h-8 relative">
+              <Image
+                src="/images/empty_star.svg"
+                alt=""
+                fill
+                className="object-contain"
+              />
+            </div>
+          )}
+
+          {/* Empty Stars */}
+          {Array.from({ length: emptyStars }).map((_, i) => (
+            <div key={`empty-${i}`} className="w-6 h-6 md:w-8 md:h-8 relative">
+              <Image
+                src="/images/empty_star.svg"
+                alt=""
+                fill
+                className="object-contain"
+              />
+            </div>
+          ))}
+        </div>
+        <span className="font-medium text-xl md:text-2xl text-[#333333]">
+          {rating.toFixed(1)}
+        </span>
+      </div>
+
+      {/* Pricing */}
+      {selectedVariant && (
+        <div className="flex flex-col gap-2">
           <div className="flex items-center gap-4">
-            <span className="text-xl md:text-3xl font-medium text-gray-400 line-through">
-              ₹{selectedVariant.mrp}
-            </span>
+            {discountAmount > 0 && (
+              <span className="text-xl md:text-3xl font-medium text-gray-400 line-through">
+                ₹{selectedVariant.mrp}
+              </span>
+            )}
             <span className="text-2xl md:text-4xl font-bold ">
-              ₹{selectedVariant.couponAppliedPrice}
+              ₹{selectedVariant.sellingPrice}
             </span>
           </div>
-        </div>
-      )}
-
-      {/* Pricing without Coupon */}
-      {!hasCoupon && selectedVariant && (
-        <div className="flex items-center gap-4">
-          {discountAmount > 0 && (
-            <span className="text-xl md:text-3xl font-medium text-gray-400 line-through">
-              ₹{selectedVariant.mrp}
-            </span>
-          )}
-          <span className="text-2xl md:text-4xl font-bold ">
-            ₹{selectedVariant.sellingPrice}
-          </span>
         </div>
       )}
 

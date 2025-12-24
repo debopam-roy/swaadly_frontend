@@ -10,7 +10,7 @@ export default function Home() {
     <main
       className="min-h-screen relative overflow-x-clip"
       style={{
-        backgroundImage: "url('/images/peanut_butter.svg')",
+        backgroundImage: "url('/images/hero.svg')",
         backgroundSize: 'cover',
         backgroundPosition: 'top center',
         backgroundAttachment: 'fixed',

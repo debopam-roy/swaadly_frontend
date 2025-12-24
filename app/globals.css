@@ -15,7 +15,7 @@
   --color-primary_button: var(--green);
   --color-shadow: var(--peanut);
   --color-selected: var(--selected);
-  --font-inter: var(--font-inter);
+  --font-sans: var(--font-satoshi);
   --font-display: var(--font-shrikhand);
 }
 
@@ -23,7 +23,7 @@
 body {
   background: var(--background);
   color: var(--black);
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-satoshi), sans-serif;
 }
 
 .font-shrikhand {

@@ -1,30 +1,59 @@
-'use client';
+import Image from 'next/image';
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full h-screen">
+    <section className="w-full min-h-screen relative">
 
-      {/* Hero Image - Crescent shape at top */}
-      <div className="absolute top-0 left-0 w-full h-[70vh] z-10">
-        <img
-          src="/images/hero.svg"
-          alt="Swaadly Hero"
-          className="w-full h-full object-cover object-bottom"
+      <div className="relative block" style={{ marginBottom: '-1px' }}>
+        <Image 
+          src="/images/hero_banner.svg" 
+          alt="hero banner" 
+          width={1920} 
+          height={685} 
+          className="w-full block"
+          style={{ display: 'block' }}
         />
       </div>
 
-      {/* Decorative Background - Takes bottom half of screen */}
-      <div className="absolute left-0 bottom-0 w-full h-[50vh] bg-background z-0">
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-[1130px] px-4 z-20">
-          <p className="font-medium text-center text-[32px] leading-9">
-            Not only gym freaks,
-          </p>
-          <p className="font-bold text-center text-[40px] leading-11">
-            every individual should have healthy diet
-          </p>
+      {/* Orange Wave + Tagline + Orange Wave Section */}
+      <div className="relative border border-amber-600" >
+        {/* Upper Wave */}
+        <div className="relative block">
+          <Image 
+            src="/images/wave_orange.svg" 
+            alt="upper curve" 
+            width={1920} 
+            height={100} 
+            className="w-full block"
+            style={{ display: 'block' }}
+          />
+        </div>
+
+        {/* Tagline */}
+        <div className="flex items-center justify-center bg-background">
+          <div className="max-w-2xl">
+            <Image 
+              src="/images/hero_tagline.svg" 
+              alt="Swaadly" 
+              width={768} 
+              height={200} 
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        {/* Lower Wave (rotated) */}
+        <div className="relative block">
+          <Image 
+            src="/images/wave_orange.svg" 
+            alt="lower curve" 
+            width={1920} 
+            height={100} 
+            className="w-full block rotate-180"
+            style={{ display: 'block' }}
+          />
         </div>
       </div>
-
     </section>
   );
 }

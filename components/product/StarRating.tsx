@@ -3,7 +3,7 @@
 import Image from 'next/image';
 
 interface StarRatingProps {
-  rating: number;
+  rating?: number;
   totalReviews?: number;
   showNumber?: boolean;
   size?: 'sm' | 'md' | 'lg';
@@ -11,7 +11,7 @@ interface StarRatingProps {
 }
 
 export default function StarRating({
-  rating,
+  rating = 0,
   totalReviews,
   showNumber = true,
   size = 'md',
@@ -29,7 +29,8 @@ export default function StarRating({
     lg: 'text-2xl',
   };
 
-  const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(rating));
+  const safeRating = rating ?? 0;
+  const stars = Array.from({ length: 5 }, (_, i) => i < Math.floor(safeRating));
 
   return (
     <div className="flex items-center gap-2 md:gap-4">
@@ -46,9 +47,9 @@ export default function StarRating({
         ))}
       </div>
       {showNumber && (
-        <span className={`${textSizeClasses[size]} font-medium text-${textColor === 'black' ? 'black' : 'white'}`}>
-          {rating.toFixed(1)}
-          {totalReviews && (
+        <span className={`${textSizeClasses[size]} font-medium ${textColor === 'white' ? 'text-white' : 'text-black'}`}>
+          {safeRating.toFixed(1)}
+          {totalReviews !== undefined && (
             <span className="text-gray-500 ml-1">({totalReviews})</span>
           )}
         </span>
