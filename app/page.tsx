@@ -4,6 +4,7 @@ import FromPeanutSection from '@/components/home/FromPeanutSection';
 import BrandQuoteSection from '@/components/home/BrandQuoteSection';
 import OurPromiseSection from '@/components/home/OurPromiseSection';
 import PopularFlavoursSection from '@/components/home/PopularFlavoursSection';
+import ReviewsSection from '@/components/reviews/ReviewsSection';
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <BrandQuoteSection />
       <OurPromiseSection />
       <PopularFlavoursSection />
+      <ReviewsSection />
     </main>
   );
 }

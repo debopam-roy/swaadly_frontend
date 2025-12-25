@@ -21,9 +21,9 @@ export default function BrandQuoteSection() {
       <div className="relative px-[60px] py-[120px] flex items-center justify-center min-h-[886px]">
         <div className="max-w-[1200px] mx-auto">
           <h2 className="font-bold text-[#333] text-[100px] leading-[104px] text-center">
-            <span>&quot;India&apos;s first peanut butter brand which </span>
+            <span>&ldquo;India&apos;s first peanut butter brand which </span>
             <span className="text-[#28a777]">serves health</span>
-            <span> with taste&quot;</span>
+            <span> with taste&rdquo;</span>
           </h2>
         </div>
       </div>

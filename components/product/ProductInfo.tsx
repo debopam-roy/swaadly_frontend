@@ -8,15 +8,14 @@ import QuantitySelector from './QuantitySelector';
 
 interface ProductInfoProps {
   product: Product;
+  selectedVariant: ProductVariant | null;
+  onVariantChange: (variant: ProductVariant) => void;
   onAddToCart?: (variantId: string, quantity: number) => void;
   onBuyNow: (variantId: string, quantity: number) => void;
 }
 
-export default function ProductInfo({ product, onAddToCart, onBuyNow }: ProductInfoProps) {
+export default function ProductInfo({ product, selectedVariant, onVariantChange, onAddToCart, onBuyNow }: ProductInfoProps) {
   const { addToCart } = useCart();
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
-    product.variants?.find((v) => v.isDefault) || product.variants?.[0] || ({} as ProductVariant)
-  );
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
@@ -44,7 +43,7 @@ export default function ProductInfo({ product, onAddToCart, onBuyNow }: ProductI
     }
   };
 
-  const discountAmount = selectedVariant?.mrp - selectedVariant?.sellingPrice;
+  const discountAmount = (selectedVariant?.mrp ?? 0) - (selectedVariant?.sellingPrice ?? 0);
 
   const handleShare = async () => {
     try {
@@ -190,7 +189,7 @@ export default function ProductInfo({ product, onAddToCart, onBuyNow }: ProductI
               {product.variants.map((variant) => (
                 <button
                   key={variant.id}
-                  onClick={() => setSelectedVariant(variant)}
+                  onClick={() => onVariantChange(variant)}
                   disabled={!variant.isAvailable}
                   className={`flex flex-col items-center justify-between rounded-xl border-[1] border-b-4 transition-all min-w-22 ${
                     selectedVariant?.id === variant.id

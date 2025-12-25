@@ -4,31 +4,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { productsService } from '@/lib/services/products.service';
-import type { Product } from '@/lib/types/product.types';
+import type { Product, ProductVariant } from '@/lib/types/product.types';
 import ProductImageGallery from '@/components/product/ProductImageGallery';
 import ProductInfo from '@/components/product/ProductInfo';
 import ProductReviews from '@/components/product/ProductReviews';
 import ExploreOtherProducts from '@/components/product/ExploreOtherProducts';
-
-// Mock reviews data - Replace with actual API call
-const mockReviews = [
-  {
-    id: '1',
-    userName: 'Arpit Goyal',
-    rating: 4.4,
-    title: 'Good product',
-    comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    createdAt: new Date(),
-  },
-  {
-    id: '2',
-    userName: 'Arpit Goyal',
-    rating: 4.4,
-    title: 'Good product',
-    comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    createdAt: new Date(),
-  },
-];
 
 export default function ProductPage() {
   const params = useParams();
@@ -36,6 +16,7 @@ export default function ProductPage() {
   const slug = params.slug as string;
 
   const [product, setProduct] = useState<Product | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +27,11 @@ export default function ProductPage() {
         setError(null);
         const data = await productsService.getProductBySlug(slug);
         setProduct(data);
+        // Set default variant
+        const defaultVariant = data.variants?.find((v) => v.isDefault) || data.variants?.[0];
+        if (defaultVariant) {
+          setSelectedVariant(defaultVariant);
+        }
       } catch (err) {
         console.error('Failed to fetch product:', err);
         setError('Failed to load product. Please try again later.');
@@ -124,6 +110,8 @@ export default function ProductPage() {
             {/* Right: Product Info */}
             <ProductInfo
               product={product}
+              selectedVariant={selectedVariant}
+              onVariantChange={setSelectedVariant}
               onAddToCart={handleAddToCart}
               onBuyNow={handleBuyNow}
             />
@@ -193,19 +181,13 @@ export default function ProductPage() {
           excludeProductIds={[product.id]}
           title="Explore other products"
           viewAllUrl="/products"
-          backgroundImage="/images/products_background.svg"
           className="min-h-screen"
         />
       )}
 
 
       {/* Reviews Section */}
-      {/* TODO: Implement reviews when backend API is ready */}
-      {/* <ProductReviews
-        reviews={mockReviews}
-        totalReviews={0}
-        averageRating={0}
-      /> */}
+      <ProductReviews productId={product.id} variantId={selectedVariant?.id} />
     </main>
   );
 }
