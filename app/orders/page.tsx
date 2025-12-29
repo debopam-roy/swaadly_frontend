@@ -254,7 +254,7 @@ export default function OrdersPage() {
       <section className="w-full overflow-hidden">
         <div className="relative w-full h-[400px] md:h-[500px] lg:h-[682px]">
           <Image
-            src="/images/peanut_butter.svg"
+            src="https://storage.googleapis.com/swaadly-uploads-prod/peanut_butter.svg"
             alt="Swaadly Peanut Butter"
             fill
             className="object-cover"

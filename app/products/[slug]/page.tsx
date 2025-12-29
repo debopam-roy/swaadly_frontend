@@ -137,7 +137,7 @@ export default function ProductPage() {
             {/* About Image */}
             <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden">
               <Image
-                src="/images/peanut_butter.svg"
+                src="https://storage.googleapis.com/swaadly-uploads-prod/peanut_butter.svg"
                 alt="Product details"
                 fill
                 className="object-cover"
@@ -156,7 +156,7 @@ export default function ProductPage() {
             {/* Image First on Mobile, Text on Desktop */}
             <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden order-2 lg:order-1">
               <Image
-                src={product.bestWayToEatImageUrl || "/images/best_way_to_eat.png"}
+                src={product.bestWayToEatImageUrl || "https://storage.googleapis.com/swaadly-uploads-prod/best_way_to_eat.png"}
                 alt="Best ways to eat"
                 fill
                 className="object-cover"

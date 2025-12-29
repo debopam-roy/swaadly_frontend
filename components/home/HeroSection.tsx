@@ -6,7 +6,7 @@ export default function HeroSection() {
 
       <div className="relative block">
         <Image
-          src="/images/hero_banner.svg"
+          src="https://storage.googleapis.com/swaadly-uploads-prod/hero_banner.svg"
           alt="hero banner"
           width={1920}
           height={685}

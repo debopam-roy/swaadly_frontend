@@ -121,7 +121,7 @@ export default function ProfilePage() {
           <div className="flex items-center justify-center mt-4 md:mt-0">
             <div className="relative w-full h-64 md:h-full min-h-[400px]">
               <Image
-                src="/images/peanut_butter.svg"
+                src="https://storage.googleapis.com/swaadly-uploads-prod/peanut_butter.svg"
                 alt="Peanut Butter Products"
                 fill
                 className="object-contain"

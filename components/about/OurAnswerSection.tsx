@@ -16,7 +16,7 @@ export default function OurAnswerSection() {
             <div className="absolute left-0 -top-7 -right-6 -bottom-1 bg-background rounded-[40px] -bg-conic-120 -rotate-3" />
             <div className="relative border-[1] border-black rounded-[40px] overflow-hidden">
               <Image
-                src="/images/hero.png"
+                src="https://storage.googleapis.com/swaadly-uploads-prod/hero_background.png"
                 alt="Swaadly peanut butter jars"
                 width={628}
                 height={504}

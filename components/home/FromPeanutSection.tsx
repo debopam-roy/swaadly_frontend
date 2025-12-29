@@ -36,7 +36,7 @@ export default function FromPeanutSection() {
       {/* Right Side - Image */}
       <div className="flex-1 relative min-h-[300px] sm:min-h-[400px] lg:min-h-0 lg:aspect-734/800">
         <Image
-          src="/images/best_way_to_eat.png"
+          src="https://storage.googleapis.com/swaadly-uploads-prod/best_way_to_eat.png"
           alt="Peanut butter sandwich"
           fill
           className="object-cover object-center"

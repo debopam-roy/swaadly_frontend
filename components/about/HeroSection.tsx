@@ -44,7 +44,7 @@ export default function AboutHeroSection() {
             <div className="absolute -left-6 top-0 right-0 -bottom-8 bg-primary_button rounded-[40px] rotate-3" />
               <div className="relative border-[1] border-[#333] rounded-[40px] overflow-hidden shadow-[3px_4px_0px_0px_#333]">
                 <Image
-                  src="/images/about_hero_image.svg"
+                  src="https://storage.googleapis.com/swaadly-uploads-prod/about_hero_image.png"
                   alt="Three friends enjoying Swaadly"
                   width={628}
                   height={504}
