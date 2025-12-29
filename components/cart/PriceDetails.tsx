@@ -36,7 +36,7 @@ export default function PriceDetails({ summary, itemCount, onBuyNow }: PriceDeta
       </div>
 
       {/* Divider */}
-      <div className="w-full h-px bg-[#333333]" />
+      <div className="w-full h-px bg-black" />
 
       {/* Subtotal and Buy Now */}
       <div className="flex flex-col md:flex-row gap-4 md:gap-6 md:items-center">

@@ -67,7 +67,7 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
 
   if (isLoading) {
     return (
-      <section className="w-full bg-[#333333] py-12 md:py-16 px-4 md:px-[60px]">
+      <section className="w-full bg-black py-12 md:py-16 px-4 md:px-[60px]">
         <h2 className="text-3xl md:text-[40px] font-bold text-white leading-tight md:leading-[44px] mb-8 md:mb-10">
           Reviews
         </h2>
@@ -96,7 +96,7 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
   }
 
   return (
-    <section className="w-full bg-[#333333] py-12 md:py-16 px-4 md:px-[60px]">
+    <section className="w-full bg-black py-12 md:py-16 px-4 md:px-[60px]">
       <h2 className="text-3xl md:text-[40px] font-bold text-white leading-tight md:leading-[44px] mb-8 md:mb-10">
         Reviews
       </h2>

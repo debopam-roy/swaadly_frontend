@@ -64,7 +64,7 @@ function NewsletterForm({ onSubmit }: NewsletterFormProps) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full px-6 py-4 border-2 border-[#333333] rounded-full bg-white placeholder:text-[rgba(51,51,51,0.5)] focus:outline-none focus:ring-2 focus:ring-[#44c997] font-medium text-base"
+        className="w-full px-6 py-4 border-[1] border-black rounded-full bg-white placeholder:text-[rgba(51,51,51,0.5)] focus:outline-none focus:ring-2 focus:ring-[#44c997] font-medium text-base"
       />
       <button
         type="submit"

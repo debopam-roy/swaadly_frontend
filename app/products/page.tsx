@@ -5,15 +5,13 @@ import { useRouter } from 'next/navigation';
 import { productsService } from '@/lib/services/products.service';
 import type { Product } from '@/lib/types/product.types';
 import ProductCard from '@/components/product/ProductCard';
+import Footer from '@/components/footer';
 
 export default function ProductsPage() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,12 +22,9 @@ export default function ProductsPage() {
           isActive: true,
           sortBy: 'displayOrder',
           sortOrder: 'asc',
-          page,
-          limit: 12
+          limit: 100
         });
         setProducts(response.products);
-        setTotalPages(response.totalPages);
-        setTotal(response.total);
       } catch (err) {
         console.error('Failed to fetch products:', err);
         setError('Failed to load products. Please try again later.');
@@ -39,33 +34,18 @@ export default function ProductsPage() {
     };
 
     fetchProducts();
-  }, [page]);
+  }, []);
 
   const handleAddToCart = (productId: string) => {
-    // TODO: Implement add to cart logic
     console.log('Add to cart:', productId);
-  };
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
+      <div className="min-h-screen flex items-center justify-center bg-[#FFF8F0]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C68642] mx-auto"></div>
-          <p className="mt-4 ">Loading products...</p>
+          <p className="mt-4">Loading products...</p>
         </div>
       </div>
     );
@@ -73,7 +53,7 @@ export default function ProductsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
+      <div className="min-h-screen flex items-center justify-center bg-[#FFF8F0]">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-2">Error</h2>
           <p className="mb-4">{error}</p>
@@ -89,15 +69,12 @@ export default function ProductsPage() {
   }
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <section
-        className="relative overflow-hidden min-h-[400px] bg-cover bg-no-repeat bg-center"
-        style={{ backgroundImage: "url('/images/products_background.svg')" }}
-      >
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-display text-white italic mb-4"
+    <main className="min-h-screen ">
+      {/* Main Content */}
+      <section className="pt-12 pb-12 px-4 md:px-15">
+        <div className="max-w-[1320px] mx-auto space-y-8">
+          {/* Hero Title */}
+          <h1 className="text-3xl md:text-4xl font-display text-white italic text-center tracking-wideer"
               style={{
                 WebkitTextStroke: '2px var(--peanut)',
                 paintOrder: 'stroke fill',
@@ -105,26 +82,20 @@ export default function ProductsPage() {
                 textShadow: '0px 4px 0px #C68642',
               } as React.CSSProperties}
             >
-              Our Products
-            </h1>
-            <p className="text-xl md:text-2xl max-w-2xl mx-auto">
-              Discover our range of premium peanut butter products
-            </p>
-          </div>
-        </div>
-      </section>
+            Discover our range of
+            <br />
+            Premium Peanut Butters
+          </h1>
 
-      {/* Products Grid */}
-      <section className="relative overflow-hidden bg-[#F5E6D3] py-12 md:py-16">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Products Grid - First Row */}
           {products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-xl ">No products available at the moment.</p>
+              <p className="text-xl">No products available at the moment.</p>
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                {products.map((product) => (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                {products.slice(0, 3).map((product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
@@ -133,31 +104,69 @@ export default function ProductsPage() {
                 ))}
               </div>
 
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-4 mt-8">
-                  <button
-                    onClick={handlePreviousPage}
-                    disabled={page === 1}
-                    className="px-6 py-3 bg-white border-2 border-[#333333] rounded-full font-medium hover:bg-[#F5EDE0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Previous
-                  </button>
-                  <span className="font-medium">
-                    Page {page} of {totalPages}
-                  </span>
-                  <button
-                    onClick={handleNextPage}
-                    disabled={page === totalPages}
-                    className="px-6 py-3 bg-white border-2 border-[#333333] rounded-full font-medium hover:bg-[#F5EDE0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Next
-                  </button>
+              {/* Products Grid - Second Row */}
+              {products.length > 3 && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                  {products.slice(3, 6).map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onAddToCart={handleAddToCart}
+                    />
+                  ))}
                 </div>
               )}
 
-              <p className="text-center mt-4">
-                Showing {products.length} of {total} products
+              {/* Why Choose Our Products Section */}
+              <div className="bg-[rgba(95,185,150,0.3)] rounded-2xl p-8 mb-6">
+                <h2 className="font-bold text-base tracking-[-0.3125px] mb-6">
+                  Why Choose Our Products?
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* 100% Natural */}
+                  <div className="flex flex-col gap-3">
+                    <div className="w-12 h-12 bg-[#5fb996] rounded-full flex items-center justify-center">
+                      <span className="text-white text-xl tracking-[-0.4492px]">✓</span>
+                    </div>
+                    <h3 className="font-normal text-base tracking-[-0.3125px]">
+                      100% Natural
+                    </h3>
+                    <p className="text-[#4a5565] text-sm leading-5 tracking-[-0.1504px]">
+                      Made from premium quality peanuts with no artificial preservatives or additives.
+                    </p>
+                  </div>
+
+                  {/* Two Sizes Available */}
+                  <div className="flex flex-col gap-3">
+                    <div className="w-12 h-12 bg-[#5fb996] rounded-full flex items-center justify-center">
+                      <span className="text-white text-xl tracking-[-0.4492px]">✓</span>
+                    </div>
+                    <h3 className="font-normal text-base tracking-[-0.3125px]">
+                      Two Sizes Available
+                    </h3>
+                    <p className="text-[#4a5565] text-sm leading-5 tracking-[-0.1504px]">
+                      Choose between 500g for trying out or 1kg for regular consumption at better value.
+                    </p>
+                  </div>
+
+                  {/* Rich in Protein */}
+                  <div className="flex flex-col gap-3">
+                    <div className="w-12 h-12 bg-[#5fb996] rounded-full flex items-center justify-center">
+                      <span className="text-white text-xl tracking-[-0.4492px]">✓</span>
+                    </div>
+                    <h3 className="font-normal text-base tracking-[-0.3125px]">
+                      Rich in Protein
+                    </h3>
+                    <p className="text-[#4a5565] text-sm leading-5 tracking-[-0.1504px]">
+                      High protein content to support your fitness goals or healthy lifestyle.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Text */}
+              <p className="text-center text-[#6a7282] text-sm leading-5 tracking-[-0.1504px]">
+                More exciting products coming soon! Stay tuned for our upcoming range.
               </p>
             </>
           )}
