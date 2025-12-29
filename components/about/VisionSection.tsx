@@ -20,7 +20,7 @@ export default function VisionSection() {
 
           {/* Vision Card */}
           <div className="max-w-5xl mx-auto">
-            <div className="bg-white border-2 border-[#333] rounded-[40px] px-6 md:px-16 py-10 md:py-16 space-y-6 md:space-y-8">
+            <div className="bg-white border-[1] border-black rounded-[40px] px-6 md:px-16 py-10 md:py-16 space-y-6 md:space-y-8">
               <p className="font-bold text-2xl md:text-3xl leading-relaxed text-center">
                 A future where families, students and fitness enthusiasts all enjoy food that is simple, nutritious and full of swaad.
               </p>

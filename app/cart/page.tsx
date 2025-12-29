@@ -68,7 +68,7 @@ export default function CartPage() {
   const cartProductIds = cartItems.map(item => item.product.id);
 
   return (
-    <main className="min-h-screen bg-[#F5E6D3]">
+    <main className="min-h-screen">
       {/* Page Title */}
       <section className="pt-8 md:pt-12 pb-6 md:pb-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

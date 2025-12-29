@@ -14,7 +14,7 @@ export default function OurAnswerSection() {
 
             {/* Image Container */}
             <div className="absolute left-0 -top-7 -right-6 -bottom-1 bg-background rounded-[40px] -bg-conic-120 -rotate-3" />
-            <div className="relative border-2 border-[#333] rounded-[40px] overflow-hidden">
+            <div className="relative border-[1] border-black rounded-[40px] overflow-hidden">
               <Image
                 src="/images/hero.png"
                 alt="Swaadly peanut butter jars"
@@ -40,32 +40,32 @@ export default function OurAnswerSection() {
             </p>
 
             {/* Feature Card */}
-            <div className="bg-white border-2 border-[#333] rounded-[32px] px-6 md:px-8 py-6 md:py-9 space-y-5">
+            <div className="bg-white border-[1] border-black rounded-4xl px-6 md:px-8 py-6 md:py-9 space-y-5">
               <h3 className="font-bold text-lg md:text-xl">
                 Every Swaadly jar starts with:
               </h3>
 
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
-                  <div className="bg-[#44C997] rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0">
+                  <div className="bg-primary_button rounded-full w-7 h-7 flex items-center justify-center shrink-0">
                     <span className="font-medium">✓</span>
                   </div>
                   <span className="font-medium text-lg md:text-xl">Real roasted peanuts</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="bg-[#44C997] rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0">
+                  <div className="bg-primary_button rounded-full w-7 h-7 flex items-center justify-center shrink-0">
                     <span className="font-medium">✓</span>
                   </div>
                   <span className="font-medium text-lg md:text-xl">No palm oil</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="bg-[#44C997] rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0">
+                  <div className="bg-primary_button rounded-full w-7 h-7 flex items-center justify-center shrink-0">
                     <span className="font-medium">✓</span>
                   </div>
                   <span className="font-medium text-lg md:text-xl">No preservatives</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="bg-[#44C997] rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0">
+                  <div className="bg-primary_button rounded-full w-7 h-7 flex items-center justify-center shrink-0">
                     <span className="font-medium">✓</span>
                   </div>
                   <span className="font-medium text-lg md:text-xl">No complicated claims</span>

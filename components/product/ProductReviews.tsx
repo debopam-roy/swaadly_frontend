@@ -68,7 +68,7 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
   if (isLoading) {
     return (
       <section className="w-full bg-black py-12 md:py-16 px-4 md:px-[60px]">
-        <h2 className="text-3xl md:text-[40px] font-bold text-white leading-tight md:leading-[44px] mb-8 md:mb-10">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 md:mb-10">
           Reviews
         </h2>
         <div className="flex flex-col gap-7">
@@ -97,7 +97,7 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
 
   return (
     <section className="w-full bg-black py-12 md:py-16 px-4 md:px-[60px]">
-      <h2 className="text-3xl md:text-[40px] font-bold text-white leading-tight md:leading-[44px] mb-8 md:mb-10">
+      <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 md:mb-10">
         Reviews
       </h2>
 
@@ -115,7 +115,7 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
                     className="object-contain"
                   />
                 </div>
-                <span className="text-xl md:text-2xl font-bold text-white leading-7">
+                <span className="text-base md:text-lg font-bold text-white">
                   {review.reviewerName}
                 </span>
               </div>
@@ -123,20 +123,20 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
               {/* Rating */}
               <div className="flex items-center gap-3">
                 <StarRating rating={review.rating} showNumber={false} size="sm" />
-                <span className="text-xl md:text-2xl font-medium text-white leading-7">
+                <span className="text-base md:text-lg font-medium text-white">
                   {review.rating.toFixed(1)}
                 </span>
               </div>
 
               {/* Review Title */}
               {review.title && (
-                <h3 className="text-xl md:text-2xl font-medium text-white leading-7">
+                <h3 className="text-base md:text-lg font-medium text-white">
                   {review.title}
                 </h3>
               )}
 
               {/* Review Comment */}
-              <p className="text-xl md:text-2xl font-medium text-white leading-7">
+              <p className="text-sm md:text-base font-normal text-white leading-relaxed">
                 {review.comment}
               </p>
             </div>
@@ -155,7 +155,7 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
           <button
             onClick={loadMore}
             disabled={isLoadingMore}
-            className="px-8 py-3 border-2 border-white text-white font-medium rounded-full transition-colors cursor-pointer hover:bg-white hover:disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-3 border-2 border-white text-white text-sm md:text-base font-medium rounded-full transition-colors cursor-pointer hover:bg-white hover:text-black hover:disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoadingMore ? 'Loading...' : 'Load More Reviews'}
           </button>

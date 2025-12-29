@@ -34,9 +34,9 @@ export default function FromPeanutSection() {
       </div>
 
       {/* Right Side - Image */}
-      <div className="flex-1 bg-[#ffe4b4] relative min-h-[300px] sm:min-h-[400px] lg:min-h-0 lg:aspect-734/800">
+      <div className="flex-1 relative min-h-[300px] sm:min-h-[400px] lg:min-h-0 lg:aspect-734/800">
         <Image
-          src="/images/best_way_to_eat.svg"
+          src="/images/best_way_to_eat.png"
           alt="Peanut butter sandwich"
           fill
           className="object-cover object-center"

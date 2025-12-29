@@ -64,7 +64,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
 
         <button
           onClick={handleAddToCart}
-          className="w-full mt-auto bg-primary_button  font-medium text-xl md:text-2xl py-4 md:py-5 rounded-[40px] hover:bg-[#3AB586] transition-colors"
+          className="w-full mt-auto bg-primary_button font-medium text-xl md:text-2xl py-4 md:py-5 rounded-[40px] cursor-pointer"
         >
           Buy now
         </button>

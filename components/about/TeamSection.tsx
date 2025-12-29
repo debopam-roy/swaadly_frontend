@@ -4,7 +4,7 @@ export default function TeamSection() {
       initial: 'P',
       name: 'Prashant',
       description: 'Clarity-driven, science-first perspective',
-      bgColor: 'bg-[#44C997]',
+      bgColor: 'bg-primary_button',
     },
     {
       initial: 'S',
@@ -39,11 +39,11 @@ export default function TeamSection() {
             {teamMembers.map((member) => (
               <div
                 key={member.name}
-                className={`${member.bgColor} border-2 border-[#333] rounded-[40px] shadow-[8px_8px_0px_0px_#333] px-6 md:px-10 py-8 md:py-10 space-y-4 md:space-y-5`}
+                className={`${member.bgColor} border-[1] border-black rounded-[40px] shadow-[8px_8px_0px_0px_#333] px-6 md:px-10 py-8 md:py-10 space-y-4 md:space-y-5`}
               >
                 {/* Initial Circle */}
                 <div className="flex justify-center">
-                  <div className="bg-white border-2 border-[#333] rounded-full w-20 h-20 md:w-24 md:h-24 flex items-center justify-center">
+                  <div className="bg-white border-[1] border-black rounded-full w-20 h-20 md:w-24 md:h-24 flex items-center justify-center">
                     <span className="font-bold text-3xl md:text-4xl">
                       {member.initial}
                     </span>
@@ -65,7 +65,7 @@ export default function TeamSection() {
 
           {/* Bottom Note */}
           <div className="max-w-4xl mx-auto">
-            <div className="bg-[#333] rounded-[32px] px-6 md:px-8 py-8 md:py-8">
+            <div className="bg-black rounded-4xl px-6 md:px-8 py-8 md:py-8">
               <p className="font-medium text-white text-lg md:text-xl text-center leading-relaxed">
                 None of these roles are about titles or achievements — they're simply the different lenses through which Swaadly is built every day.
               </p>

@@ -36,11 +36,11 @@ export default function WhatWeStandForSection() {
             {values.map((value) => (
               <div
                 key={value.title}
-                className="bg-white border-2 border-[#333] rounded-[40px] shadow-[8px_8px_0px_0px_#333] px-6 md:px-10 py-8 md:py-10 space-y-4 md:space-y-5"
+                className="bg-white border-[1] border-black rounded-[40px] shadow-[8px_8px_0px_0px_#333] px-6 md:px-10 py-8 md:py-10 space-y-4 md:space-y-5"
               >
                 {/* Emoji Circle */}
                 <div className="flex justify-center">
-                  <div className={`${value.bgColor} border-2 border-[#333] rounded-full w-20 h-20 flex items-center justify-center`}>
+                  <div className={`${value.bgColor} border-[1] border-black rounded-full w-20 h-20 flex items-center justify-center`}>
                     <span className="text-4xl md:text-5xl">{value.emoji}</span>
                   </div>
                 </div>
@@ -60,7 +60,7 @@ export default function WhatWeStandForSection() {
 
           {/* Bottom Message Card */}
           <div className="max-w-4xl mx-auto">
-            <div className="bg-[#333] rounded-[40px] px-6 md:px-16 py-10 md:py-16 space-y-6">
+            <div className="bg-black rounded-[40px] px-6 md:px-16 py-10 md:py-16 space-y-6">
               <h3 className="font-bold text-white text-3xl md:text-4xl text-center">
                 Food should feel simple again
               </h3>

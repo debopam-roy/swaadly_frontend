@@ -26,7 +26,7 @@ export default function QuantitySelector({
         Quantity
       </span>
 
-      <div className="flex items-center border-2 border-shadow rounded-full overflow-hidden flex-1">
+      <div className="flex items-center border-[1] border-shadow rounded-full overflow-hidden flex-1">
         <button
           onClick={onDecrease}
           disabled={!canDecrease}

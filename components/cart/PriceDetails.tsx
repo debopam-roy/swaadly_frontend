@@ -10,7 +10,7 @@ interface PriceDetailsProps {
 
 export default function PriceDetails({ summary, itemCount, onBuyNow }: PriceDetailsProps) {
   return (
-    <div className="bg-white p-4 md:p-6 flex flex-col gap-4 md:gap-6">
+    <div className="bg-white p-4 md:p-6 flex flex-col gap-4 md:gap-6 rounded-xl">
       {/* Price Breakdown */}
       <div className="flex flex-col gap-3 md:gap-4">
         <h3 className="text-lg md:text-xl font-medium ">
@@ -57,7 +57,7 @@ export default function PriceDetails({ summary, itemCount, onBuyNow }: PriceDeta
 
         <button
           onClick={onBuyNow}
-          className="bg-[#44C997] font-medium text-sm md:text-base px-6 md:px-10 py-3 md:py-3.5 rounded-full hover:bg-[#3AB586] transition-colors whitespace-nowrap"
+          className="bg-primary_button font-medium text-sm md:text-base px-6 md:px-10 py-3 md:py-3.5 rounded-full cursor-pointer"
         >
           Buy now
         </button>

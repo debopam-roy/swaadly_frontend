@@ -156,7 +156,7 @@ export default function ProductPage() {
             {/* Image First on Mobile, Text on Desktop */}
             <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden order-2 lg:order-1">
               <Image
-                src={product.bestWayToEatImageUrl || "/images/best_way_to_eat.svg"}
+                src={product.bestWayToEatImageUrl || "/images/best_way_to_eat.png"}
                 alt="Best ways to eat"
                 fill
                 className="object-cover"

@@ -11,7 +11,7 @@ export default function AboutHeroSection() {
           <div className="space-y-6 md:space-y-10">
             {/* Badge */}
             <div className="inline-block">
-              <div className="bg-white border-2 border-[#333] rounded-full px-6 py-2">
+              <div className="bg-white border-[1] border-black rounded-full px-6 py-2">
                 <p className="font-bold text-sm md:text-base tracking-wider uppercase">
                   About Swaadly
                 </p>

@@ -168,14 +168,14 @@ export default function ProductInfo({ product, selectedVariant, onVariantChange,
           <button
             onClick={handleAddToCart}
             disabled={!selectedVariant?.isAvailable}
-            className="flex-1 border-2 font-medium text-base md:text-lg py-4 md:py-5 rounded-full hover:bg-[#F5EDE0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 border-[1] font-medium text-base md:text-lg py-4 md:py-5 rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Add to Cart
           </button>
           <button
             onClick={handleBuyNow}
             disabled={!selectedVariant?.isAvailable}
-            className="flex-1 bg-[#44c997]  font-medium text-base md:text-lg py-4 md:py-5 rounded-full hover:bg-[#3AB586] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 bg-primary_button font-medium text-base md:text-lg py-4 md:py-5 rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Buy Now
           </button>

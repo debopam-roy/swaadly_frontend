@@ -20,29 +20,29 @@ export default function ExploreProductsSection() {
        <div className="relative max-w-[1320px] mx-auto px-4 sm:px-8 lg:px-[60px] py-12 sm:py-16 lg:py-[100px] z-10">
         {/* Section Title */}
         <div className="flex items-center justify-center gap-2 sm:gap-5 mb-12 sm:mb-16 lg:mb-[100px]">
-          <div className="h-[20px] w-[80px] sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative hidden sm:block">
+          <div className="h-5 w-5 sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative shrink-0">
             <Image
               src="/images/star_divider.svg"
               alt=""
               fill
-              className="scale-y-[-1]"
+              className="scale-y-[-1] object-contain"
             />
           </div>
-          <h2 className="font-bold text-2xl sm:text-3xl lg:text-[40px] leading-tight text-center">
+          <h2 className="font-bold text-2xl sm:text-3xl lg:text-[40px] leading-tight text-center whitespace-nowrap">
             Explore our products
           </h2>
-          <div className="h-[20px] w-[80px] sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative hidden sm:block">
+          <div className="h-5 w-5 sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative shrink-0">
             <Image
               src="/images/star_divider.svg"
               alt=""
               fill
-              className="rotate-180 scale-y-[-1]"
+              className="rotate-180 scale-y-[-1] object-contain"
             />
           </div>
         </div>
 
         {/* Product Cards */}
-        <div className="mb-[40px]">
+        <div className="mb-10">
           <ProductGrid limit={3} />
         </div>
 
@@ -50,9 +50,9 @@ export default function ExploreProductsSection() {
         <div className="flex justify-center">
           <Link
             href="/products"
-            className="border-2 border-[#333] rounded-[100px] h-[72px] px-6 flex items-center justify-center gap-2 hover:bg-[#f5f5f5] transition-colors"
+            className="border-[1] border-black rounded-[100px] h-[72px] px-6 flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span className="font-bold text-[18px] leading-[28px]">
+            <span className="font-bold text-[18px] leading-7">
               VIEW ALL
             </span>
             <Image

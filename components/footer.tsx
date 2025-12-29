@@ -68,7 +68,7 @@ function NewsletterForm({ onSubmit }: NewsletterFormProps) {
       />
       <button
         type="submit"
-        className="w-full bg-[#44c997] hover:bg-[#3AB586] font-medium text-lg py-4 rounded-full transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-primary_button cursor-pointer font-medium text-lg py-4 rounded-full flex items-center justify-center gap-2"
       >
         <Image src="/images/mail.svg" alt="" width={20} height={20} />
         Subscribe

@@ -19,7 +19,7 @@ export default function CouponSection({ onApplyCoupon, appliedCoupon, maxDiscoun
   };
 
   return (
-    <div className="bg-white p-4 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <div className="bg-white p-4 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 rounded-xl">
       <div className="flex flex-col gap-1">
         <h3 className="text-lg md:text-xl font-medium ">
           Apply Coupons
