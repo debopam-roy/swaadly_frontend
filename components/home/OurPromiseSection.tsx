@@ -37,7 +37,7 @@ export default function OurPromiseSection() {
       {/* Left Side - Image */}
       <div className="relative w-[410px] h-[800px] shrink-0">
         <Image
-          src="/images/promise.svg"
+          src="/images/promise.png"
           alt="Our Promise"
           fill
           className="object-cover"
