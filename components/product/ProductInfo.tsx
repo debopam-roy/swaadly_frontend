@@ -53,8 +53,8 @@ export default function ProductInfo({ product, selectedVariant, onVariantChange,
     }
   };
 
-  // Use actual product rating from backend (defaults to 0.0 if not available)
-  const rating = product.averageRating || 0.0;
+  // Use actual variant rating from backend (defaults to 0.0 if not available)
+  const rating = selectedVariant?.averageRating || 0.0;
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);

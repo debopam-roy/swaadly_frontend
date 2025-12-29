@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { newsletterService } from '@/lib/services/newsletter.service';
 
 interface FooterLinkProps {
   href: string;
@@ -47,12 +48,38 @@ interface NewsletterFormProps {
 
 function NewsletterForm({ onSubmit }: NewsletterFormProps) {
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && onSubmit) {
-      onSubmit(email);
+    if (!email) return;
+
+    setIsLoading(true);
+    setMessage(null);
+
+    try {
+      const response = await newsletterService.subscribe(email, 'footer');
+      setMessage({ type: 'success', text: response.message });
       setEmail('');
+
+      // Call the optional onSubmit prop if provided
+      if (onSubmit) {
+        onSubmit(email);
+      }
+
+      // Clear success message after 5 seconds
+      setTimeout(() => setMessage(null), 5000);
+    } catch (error: unknown) {
+      const errorMessage = error && typeof error === 'object' && 'message' in error
+        ? (error as { message: string }).message
+        : 'Failed to subscribe. Please try again.';
+      setMessage({ type: 'error', text: errorMessage });
+
+      // Clear error message after 5 seconds
+      setTimeout(() => setMessage(null), 5000);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -64,15 +91,40 @@ function NewsletterForm({ onSubmit }: NewsletterFormProps) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full px-6 py-4 border-[1] border-black rounded-full bg-white placeholder:text-[rgba(51,51,51,0.5)] focus:outline-none focus:ring-2 focus:ring-[#44c997] font-medium text-base"
+        disabled={isLoading}
+        className="w-full px-6 py-4 border-[1] border-black rounded-full bg-white placeholder:text-[rgba(51,51,51,0.5)] focus:outline-none focus:ring-2 focus:ring-[#44c997] font-medium text-base disabled:opacity-50 disabled:cursor-not-allowed"
       />
       <button
         type="submit"
-        className="w-full bg-primary_button cursor-pointer font-medium text-lg py-4 rounded-full flex items-center justify-center gap-2"
+        disabled={isLoading}
+        className="w-full bg-primary_button cursor-pointer font-medium text-lg py-4 rounded-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
       >
-        <Image src="/images/mail.svg" alt="" width={20} height={20} />
-        Subscribe
+        {isLoading ? (
+          <>
+            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Subscribing...
+          </>
+        ) : (
+          <>
+            <Image src="/images/mail.svg" alt="" width={20} height={20} />
+            Subscribe
+          </>
+        )}
       </button>
+      {message && (
+        <div
+          className={`text-sm font-medium px-4 py-2 rounded-lg ${
+            message.type === 'success'
+              ? 'bg-green-50 text-green-700 border border-green-200'
+              : 'bg-red-50 text-red-700 border border-red-200'
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
     </form>
   );
 }

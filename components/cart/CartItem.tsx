@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { CartItem as CartItemType } from '@/lib/types/cart.types';
 import { useDeviceType } from '@/lib/hooks/use-device-type';
 import StarRating from '@/components/product/StarRating';
@@ -23,7 +24,9 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
 
   const rating = product.averageRating ?? 0;
 
-  const handleDecrease = () => {
+  const handleDecrease = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (quantity > 1) {
       onQuantityChange(item.id, quantity - 1);
     } else {
@@ -31,14 +34,22 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
     }
   };
 
-  const handleIncrease = () => {
+  const handleIncrease = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (quantity < variant.stockQuantity) {
       onQuantityChange(item.id, quantity + 1);
     }
   };
 
+  const handleRemove = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onRemove(item.id);
+  };
+
   return (
-    <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+    <Link href={`/products/${product.slug}`} className="flex flex-col md:flex-row rounded-2xl overflow-hidden border border-gray-200 shadow-sm cursor-pointer hover:shadow-md transition-shadow">
       {/* Product Image Container */}
       <div className="w-full md:w-[40%] relative">
         <div className="aspect-[2/1] md:aspect-[3/2] relative">
@@ -58,8 +69,8 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
       <div className="w-full md:w-[60%] p-4 md:p-5 lg:p-6 flex flex-col justify-start gap-1 md:gap-1.5 bg-white relative">
         {/* Delete Button */}
         <button
-          onClick={() => onRemove(item.id)}
-          className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+          onClick={handleRemove}
+          className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer z-10"
           aria-label="Remove item from cart"
         >
           <Image
@@ -82,11 +93,6 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
         {/* Star Rating */}
         <StarRating rating={rating} size="sm" showNumber={true} />
 
-        {/* Delivery Info */}
-        <p className=" text-[#666666]">
-          Delivery in 7 days
-        </p>
-
         {/* Price */}
         <p className="text-xl md:text-2xl lg:text-3xl font-medium ">
           ₹{variant.sellingPrice}
@@ -100,7 +106,7 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
           <div className="flex items-center bg-[#F5F5F5] rounded-full w-2/3 justify-between">
             <button
               onClick={handleDecrease}
-              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
+              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center cursor-pointer hover:bg-gray-200 rounded-full transition-colors z-10"
               aria-label={quantity === 1 ? "Remove item" : "Decrease quantity"}
             >
               <Image
@@ -119,7 +125,7 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
             <button
               onClick={handleIncrease}
               disabled={quantity >= variant.stockQuantity}
-              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center disabled:opacity-40 cursor-pointer hover:bg-gray-200 rounded-full transition-colors"
+              className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center disabled:opacity-40 cursor-pointer hover:bg-gray-200 rounded-full transition-colors z-10"
               aria-label="Increase quantity"
             >
               <Image src="/images/add.svg" alt="Increase" width={16} height={16} className="md:w-5 md:h-5" />
@@ -127,6 +133,6 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
