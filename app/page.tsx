@@ -9,22 +9,17 @@ import ReviewsSection from '@/components/reviews/ReviewsSection';
 export default function Home() {
   return (
     <main
-      className="min-h-screen relative overflow-x-clip"
-      style={{
-        backgroundImage: "url('/images/hero.svg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'top center',
-        backgroundAttachment: 'fixed',
-        backgroundRepeat: 'no-repeat'
-      }}
+      className="bg-white bg-[url('/images/hero.png')] bg-cover bg-fixed bg-no-repeat min-h-screen overflow-x-clip bg-position-[center_0%] sm:bg-position-[center_5%]"
     >
-      <HeroSection />
-      <ExploreProductsSection />
-      <FromPeanutSection />
-      <BrandQuoteSection />
-      <OurPromiseSection />
-      <PopularFlavoursSection />
-      <ReviewsSection />
+      <div className="">
+        <HeroSection />
+        <ExploreProductsSection />
+        <FromPeanutSection />
+        <BrandQuoteSection />
+        <OurPromiseSection />
+        <PopularFlavoursSection />
+        <ReviewsSection />
+      </div>
     </main>
   );
 }

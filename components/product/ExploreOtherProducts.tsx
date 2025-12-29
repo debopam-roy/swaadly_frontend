@@ -121,7 +121,7 @@ const ExploreOtherProducts: React.FC<ExploreOtherProductsProps> = ({
             href={viewAllUrl}
             className="bg-white border-2 border-[#333] rounded-[100px] px-6 sm:px-10 py-3 hover:bg-[#f5f5f5] transition-colors"
           >
-            <span className="font-bold text-[#333] text-sm sm:text-base">
+            <span className="font-bold text-sm sm:text-base">
               VIEW ALL
             </span>
           </a>

@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 
 export default function OurPromiseSection() {
@@ -57,7 +55,7 @@ export default function OurPromiseSection() {
       </div>
 
       {/* Right Side - Content */}
-      <div className="flex-1 bg-white px-[60px] py-[120px] flex items-center">
+      <div className="flex-1 bg-green-200 py-[120px] flex items-center justify-center">
         <div className="flex flex-col gap-10 w-full">
           <p className="font-extralight font-display text-primary_button text-8xl leading-[104px]">
             Our Promise

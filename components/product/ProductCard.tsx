@@ -23,7 +23,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
   };
 
   return (
-    <div className="flex flex-col h-full bg-white border-2 border-black rounded-[36px] overflow-hidden shadow-[0px_8px_16px_0px_rgba(0,0,0,0.12)] hover:shadow-xl transition-shadow">
+    <div className="flex flex-col h-full bg-white border-[1] border-black rounded-[36px] overflow-hidden shadow-[0px_8px_16px_0px_rgba(0,0,0,0.12)] hover:shadow-xl transition-shadow">
       <Link href={`/products/${product.slug}`}>
         {/* Product Image */}
         <div className="relative w-full aspect-square">

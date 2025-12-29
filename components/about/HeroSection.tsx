@@ -12,7 +12,7 @@ export default function AboutHeroSection() {
             {/* Badge */}
             <div className="inline-block">
               <div className="bg-white border-2 border-[#333] rounded-full px-6 py-2">
-                <p className="font-bold text-[#333] text-sm md:text-base tracking-wider uppercase">
+                <p className="font-bold text-sm md:text-base tracking-wider uppercase">
                   About Swaadly
                 </p>
               </div>
@@ -20,19 +20,19 @@ export default function AboutHeroSection() {
 
             {/* Heading */}
             <div>
-              <h1 className="font-shrikhand italic text-[#333] text-4xl md:text-6xl lg:text-7xl leading-tight">
+              <h1 className="font-shrikhand italic text-4xl md:text-6xl lg:text-7xl leading-tight">
                 Three friends.
               </h1>
-              <h1 className="font-shrikhand italic text-[#333] text-4xl md:text-6xl lg:text-7xl leading-tight">
+              <h1 className="font-shrikhand italic text-4xl md:text-6xl lg:text-7xl leading-tight">
                 One question.
               </h1>
-              <h1 className="font-shrikhand italic text-[#333] text-4xl md:text-6xl lg:text-7xl leading-tight">
+              <h1 className="font-shrikhand italic text-4xl md:text-6xl lg:text-7xl leading-tight">
                 Real swaad.
               </h1>
             </div>
 
             {/* Subtext */}
-            <p className="font-medium text-[#333] text-xl md:text-2xl leading-relaxed max-w-lg">
+            <p className="font-medium text-xl md:text-2xl leading-relaxed max-w-lg">
               We asked why food labels are so confusing. Then we decided to do something about it.
             </p>
           </div>

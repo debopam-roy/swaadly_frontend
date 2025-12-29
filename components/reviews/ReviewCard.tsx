@@ -32,21 +32,28 @@ export default function ReviewCard({ review }: ReviewCardProps) {
       </h3>
 
       {/* Review Comment */}
-      <p className="font-medium text-[#333] text-base md:text-xl leading-relaxed md:leading-8 text-center line-clamp-4 flex-1">
+      <p className="font-medium text-base md:text-xl leading-relaxed md:leading-8 text-center line-clamp-4 flex-1">
         &ldquo;{review.comment}&rdquo;
       </p>
 
       {/* Reviewer Info */}
       <div className="flex flex-col gap-3 md:gap-4 items-center w-full mt-auto shrink-0">
-        <div className="relative w-14 h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden bg-gray-200">
-          <Image
-            src="/images/default-avatar.png"
-            alt={review.reviewerName}
-            fill
-            className="object-cover"
-          />
+        <div className="relative w-14 h-14 md:w-[72px] md:h-[72px] rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+          {review.reviewerAvatarUrl ? (
+            <Image
+              src={review.reviewerAvatarUrl}
+              alt={review.reviewerName}
+              fill
+              className="object-cover"
+              unoptimized={review.reviewerAvatarUrl.startsWith('data:')}
+            />
+          ) : (
+            <div className="w-full h-full bg-[#28a777] flex items-center justify-center text-white font-bold text-xl md:text-2xl">
+              {review.reviewerName.substring(0, 2).toUpperCase()}
+            </div>
+          )}
         </div>
-        <p className="font-medium text-[#333] text-lg md:text-2xl text-center">
+        <p className="font-medium text-base md:text-xl leading-relaxed md:leading-8 text-center line-clamp-4 flex-1">
           {review.reviewerName}
         </p>
       </div>

@@ -63,7 +63,7 @@ export default function OrderDetailsPage() {
       <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C68642] mx-auto"></div>
-          <p className="mt-4 text-[#333333]">Loading order details...</p>
+          <p className="mt-4 ">Loading order details...</p>
         </div>
       </div>
     );
@@ -76,7 +76,7 @@ export default function OrderDetailsPage() {
           <p className="text-[#AA0C0C] text-lg">{error || 'Order not found'}</p>
           <button
             onClick={() => router.push('/orders')}
-            className="mt-4 bg-[#44C997] text-[#333333] px-8 py-3 rounded-full font-medium hover:bg-[#3AB586] transition-colors"
+            className="mt-4 bg-[#44C997] px-8 py-3 rounded-full font-medium hover:bg-[#3AB586] transition-colors"
           >
             Back to Orders
           </button>
@@ -138,7 +138,7 @@ export default function OrderDetailsPage() {
                 {/* Order Date */}
                 <div>
                   <p className="text-sm font-medium text-[#666] mb-2">Order Placed</p>
-                  <p className="text-lg font-medium text-[#333]">{formatDate(order.createdAt)}</p>
+                  <p className="text-lg font-medium">{formatDate(order.createdAt)}</p>
                 </div>
 
                 {/* Delivery Date */}
@@ -147,7 +147,7 @@ export default function OrderDetailsPage() {
                     <p className="text-sm font-medium text-[#666] mb-2">
                       {isDelivered ? 'Delivered On' : 'Estimated Delivery'}
                     </p>
-                    <p className="text-lg font-medium text-[#333]">
+                    <p className="text-lg font-medium">
                       {isDelivered && order.deliveredAt
                         ? formatDate(order.deliveredAt)
                         : order.estimatedDelivery
@@ -160,14 +160,14 @@ export default function OrderDetailsPage() {
                 {/* Total Amount */}
                 <div>
                   <p className="text-sm font-medium text-[#666] mb-2">Total Amount</p>
-                  <p className="text-2xl font-bold text-[#333]">₹{order.totalAmount.toFixed(2)}</p>
+                  <p className="text-2xl font-bold">₹{order.totalAmount.toFixed(2)}</p>
                 </div>
               </div>
             </div>
 
             {/* Order Items */}
             <div className="p-6 md:p-9 bg-[#F5E6D3]">
-              <h2 className="text-2xl font-bold text-[#333] mb-6">Order Items</h2>
+              <h2 className="text-2xl font-bold mb-6">Order Items</h2>
               <div className="space-y-4">
                 {order.items.map((item) => (
                   <div
@@ -193,21 +193,21 @@ export default function OrderDetailsPage() {
 
                     {/* Product Details */}
                     <div className="flex-1">
-                      <h3 className="text-xl md:text-2xl font-medium text-[#333] mb-2">
+                      <h3 className="text-xl md:text-2xl font-medium mb-2">
                         {item.productName}
                       </h3>
                       <p className="text-base text-[#666] mb-2">
                         {item.variantWeight}{item.variantWeightUnit}
                       </p>
                       <div className="flex items-center gap-4 mb-2">
-                        <p className="text-lg text-[#333]">
+                        <p className="text-lg">
                           Quantity: <span className="font-medium">{item.quantity}</span>
                         </p>
-                        <p className="text-lg text-[#333]">
+                        <p className="text-lg">
                           Price: <span className="font-medium">₹{item.unitPrice.toFixed(2)}</span>
                         </p>
                       </div>
-                      <p className="text-xl font-bold text-[#333]">
+                      <p className="text-xl font-bold">
                         Total: ₹{item.totalPrice.toFixed(2)}
                       </p>
                     </div>
@@ -220,9 +220,9 @@ export default function OrderDetailsPage() {
             <div className="p-6 md:p-9 grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Shipping Address */}
               <div>
-                <h3 className="text-xl font-bold text-[#333] mb-4">Shipping Address</h3>
+                <h3 className="text-xl font-bold mb-4">Shipping Address</h3>
                 <div className="text-base text-[#666] space-y-1">
-                  <p className="font-medium text-[#333]">{order.customerName}</p>
+                  <p className="font-medium">{order.customerName}</p>
                   <p>{order.shippingAddress.line1}</p>
                   {order.shippingAddress.line2 && <p>{order.shippingAddress.line2}</p>}
                   <p>
@@ -236,11 +236,11 @@ export default function OrderDetailsPage() {
 
               {/* Price Breakdown */}
               <div>
-                <h3 className="text-xl font-bold text-[#333] mb-4">Price Details</h3>
+                <h3 className="text-xl font-bold mb-4">Price Details</h3>
                 <div className="space-y-3 text-base">
                   <div className="flex justify-between">
                     <span className="text-[#666]">Subtotal</span>
-                    <span className="text-[#333] font-medium">₹{order.subtotal.toFixed(2)}</span>
+                    <span className="font-medium">₹{order.subtotal.toFixed(2)}</span>
                   </div>
                   {order.discountAmount > 0 && (
                     <div className="flex justify-between">
@@ -257,16 +257,16 @@ export default function OrderDetailsPage() {
                   {order.taxAmount > 0 && (
                     <div className="flex justify-between">
                       <span className="text-[#666]">Tax</span>
-                      <span className="text-[#333] font-medium">₹{order.taxAmount.toFixed(2)}</span>
+                      <span className="font-medium">₹{order.taxAmount.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
                     <span className="text-[#666]">Delivery Fee</span>
-                    <span className="text-[#333] font-medium">₹{order.deliveryFee.toFixed(2)}</span>
+                    <span className="font-medium">₹{order.deliveryFee.toFixed(2)}</span>
                   </div>
                   <div className="border-t-2 border-[#F5E6D3] pt-3 flex justify-between">
-                    <span className="text-lg font-bold text-[#333]">Total</span>
-                    <span className="text-lg font-bold text-[#333]">₹{order.totalAmount.toFixed(2)}</span>
+                    <span className="text-lg font-bold">Total</span>
+                    <span className="text-lg font-bold">₹{order.totalAmount.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -275,16 +275,16 @@ export default function OrderDetailsPage() {
             {/* Tracking Information */}
             {(order.trackingNumber || order.courierName) && (
               <div className="p-6 md:p-9 bg-[#F5E6D3]">
-                <h3 className="text-xl font-bold text-[#333] mb-4">Tracking Information</h3>
+                <h3 className="text-xl font-bold mb-4">Tracking Information</h3>
                 <div className="space-y-2">
                   {order.courierName && (
                     <p className="text-base text-[#666]">
-                      Courier: <span className="font-medium text-[#333]">{order.courierName}</span>
+                      Courier: <span className="font-medium">{order.courierName}</span>
                     </p>
                   )}
                   {order.trackingNumber && (
                     <p className="text-base text-[#666]">
-                      Tracking Number: <span className="font-medium text-[#333]">{order.trackingNumber}</span>
+                      Tracking Number: <span className="font-medium">{order.trackingNumber}</span>
                     </p>
                   )}
                 </div>

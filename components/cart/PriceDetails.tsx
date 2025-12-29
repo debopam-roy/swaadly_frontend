@@ -13,22 +13,22 @@ export default function PriceDetails({ summary, itemCount, onBuyNow }: PriceDeta
     <div className="bg-white p-4 md:p-6 flex flex-col gap-4 md:gap-6">
       {/* Price Breakdown */}
       <div className="flex flex-col gap-3 md:gap-4">
-        <h3 className="text-lg md:text-xl font-medium text-[#333333]">
+        <h3 className="text-lg md:text-xl font-medium ">
           Price Details ({itemCount} Item{itemCount !== 1 ? 's' : ''})
         </h3>
 
         <div className="flex flex-col gap-2 md:gap-3">
-          <div className="flex justify-between items-center text-sm md:text-base text-[#333333]">
+          <div className="flex justify-between items-center text-sm md:text-base ">
             <span>Total MRP</span>
             <span>₹{summary.totalMRP.toFixed(2)}</span>
           </div>
 
-          <div className="flex justify-between items-center text-sm md:text-base text-[#333333]">
+          <div className="flex justify-between items-center text-sm md:text-base ">
             <span>Discount on MRP</span>
             <span>₹{summary.discountOnMRP.toFixed(2)}</span>
           </div>
 
-          <div className="flex justify-between items-center text-sm md:text-base text-[#333333]">
+          <div className="flex justify-between items-center text-sm md:text-base ">
             <span>Coupon Discount</span>
             <span>₹{summary.couponDiscount.toFixed(2)}</span>
           </div>
@@ -42,11 +42,11 @@ export default function PriceDetails({ summary, itemCount, onBuyNow }: PriceDeta
       <div className="flex flex-col md:flex-row gap-4 md:gap-6 md:items-center">
         <div className="flex flex-col gap-1 flex-1">
           <div className="flex items-center gap-2">
-            <h4 className="text-lg md:text-xl font-medium text-[#333333]">
+            <h4 className="text-lg md:text-xl font-medium ">
               Subtotal
             </h4>
-            <span className="text-lg md:text-xl font-medium text-[#333333]">:</span>
-            <span className="text-lg md:text-xl font-bold text-[#333333]">
+            <span className="text-lg md:text-xl font-medium ">:</span>
+            <span className="text-lg md:text-xl font-bold ">
               ₹{summary.subtotal.toFixed(2)}
             </span>
           </div>
@@ -57,7 +57,7 @@ export default function PriceDetails({ summary, itemCount, onBuyNow }: PriceDeta
 
         <button
           onClick={onBuyNow}
-          className="bg-[#44C997] text-[#333333] font-medium text-sm md:text-base px-6 md:px-10 py-3 md:py-3.5 rounded-full hover:bg-[#3AB586] transition-colors whitespace-nowrap"
+          className="bg-[#44C997] font-medium text-sm md:text-base px-6 md:px-10 py-3 md:py-3.5 rounded-full hover:bg-[#3AB586] transition-colors whitespace-nowrap"
         >
           Buy now
         </button>

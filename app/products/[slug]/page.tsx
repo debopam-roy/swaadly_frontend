@@ -61,7 +61,7 @@ export default function ProductPage() {
       <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C68642] mx-auto"></div>
-          <p className="mt-4 text-[#333333]">Loading product...</p>
+          <p className="mt-4 ">Loading product...</p>
         </div>
       </div>
     );
@@ -71,11 +71,11 @@ export default function ProductPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-[#333333] mb-2">Product Not Found</h2>
-          <p className="text-[#333333] mb-4">{error || 'The product you are looking for does not exist.'}</p>
+          <h2 className="text-2xl font-bold mb-2">Product Not Found</h2>
+          <p className="mb-4">{error || 'The product you are looking for does not exist.'}</p>
           <button
             onClick={() => router.push('/')}
-            className="px-6 py-3 bg-[#44c997] text-[#333333] rounded-full hover:bg-[#3AB586] transition-colors font-medium"
+            className="px-6 py-3 bg-[#44c997] rounded-full hover:bg-[#3AB586] transition-colors font-medium"
           >
             Go to Home
           </button>
@@ -126,10 +126,10 @@ export default function ProductPage() {
 
             {/* About Text */}
             <div className="flex flex-col gap-6 md:gap-8 bg-white p-6 md:p-12 h-full">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#333333]">
+              <h2 className="text-2xl md:text-3xl font-bold ">
                 About this product
               </h2>
-              <div className="flex flex-col gap-4 text-base md:text-lg text-[#333333] leading-relaxed">
+              <div className="flex flex-col gap-4 text-base md:text-lg leading-relaxed">
                 <p>{product.aboutProduct}</p>
               </div>
             </div>
@@ -164,10 +164,10 @@ export default function ProductPage() {
             </div>
             {/* Text */}
             <div className="flex flex-col gap-6 md:gap-8 bg-primary_button p-6 md:p-12 h-full order-1 lg:order-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#333333]">
+              <h2 className="text-2xl md:text-3xl font-bold ">
                 Best ways to eat
               </h2>
-              <div className="flex flex-col gap-4 text-base md:text-lg text-[#333333] leading-relaxed">
+              <div className="flex flex-col gap-4 text-base md:text-lg leading-relaxed">
                 <p>{product.bestWayToEat}</p>
               </div>
             </div>

@@ -21,10 +21,10 @@ export default function CouponSection({ onApplyCoupon, appliedCoupon, maxDiscoun
   return (
     <div className="bg-white p-4 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <div className="flex flex-col gap-1">
-        <h3 className="text-lg md:text-xl font-medium text-[#333333]">
+        <h3 className="text-lg md:text-xl font-medium ">
           Apply Coupons
         </h3>
-        <p className="text-sm md:text-base text-[#333333]">
+        <p className="text-sm md:text-base ">
           Get upto <span className="font-medium text-[#FF7E29]">₹{maxDiscount} OFF</span> on first order
         </p>
       </div>

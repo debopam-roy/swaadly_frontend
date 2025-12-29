@@ -92,15 +92,15 @@ export default function CartPage() {
           <div className="bg-[#F5E6D3] rounded-[36px] overflow-hidden">
             {cartItems.length === 0 ? (
               <div className="bg-white p-12 md:p-20 text-center rounded-[36px]">
-                <h2 className="text-2xl md:text-3xl font-medium text-[#333333] mb-4">
+                <h2 className="text-2xl md:text-3xl font-medium mb-4">
                   Your cart is empty
                 </h2>
-                <p className="text-lg md:text-xl text-[#333333] mb-6">
+                <p className="text-lg md:text-xl mb-6">
                   Add some delicious peanut butter to get started!
                 </p>
                 <button
                   onClick={() => router.push('/')}
-                  className="bg-[#44C997] text-[#333333] font-medium text-xl px-12 py-4 rounded-[40px] hover:bg-[#3AB586] transition-colors"
+                  className="bg-[#44C997] font-medium text-xl px-12 py-4 rounded-[40px] hover:bg-[#3AB586] transition-colors"
                 >
                   Continue Shopping
                 </button>

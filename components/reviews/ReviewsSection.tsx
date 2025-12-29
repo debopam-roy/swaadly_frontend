@@ -59,9 +59,9 @@ export default function ReviewsSection() {
 
   if (isLoading) {
     return (
-      <section className="bg-[#F5E6D3] px-4 md:px-[60px] py-12 md:py-[90px]">
+      <section className="px-4 ">
         <div className="flex items-center justify-center">
-          <h2 className="font-shrikhand italic text-[#FF7E29] text-5xl md:text-[100px] leading-tight md:leading-[104px] text-center">
+          <h2 className="font-extralight font-display text-8xl leading-[104px] text-[#FF7E29]">
             Your love
           </h2>
         </div>

@@ -27,7 +27,7 @@ export default function WhatWeStandForSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
         <div className="space-y-8 md:space-y-16">
           {/* Heading */}
-          <h2 className="font-shrikhand italic text-[#333] text-4xl md:text-5xl lg:text-6xl text-center">
+          <h2 className="font-shrikhand italic text-4xl md:text-5xl lg:text-6xl text-center">
             What we stand for
           </h2>
 
@@ -46,12 +46,12 @@ export default function WhatWeStandForSection() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-bold text-[#333] text-2xl md:text-[28px] text-center">
+                <h3 className="font-bold text-2xl md:text-[28px] text-center">
                   {value.title}
                 </h3>
 
                 {/* Description */}
-                <p className="font-medium text-[#333] text-lg md:text-xl text-center">
+                <p className="font-medium text-lg md:text-xl text-center">
                   {value.description}
                 </p>
               </div>

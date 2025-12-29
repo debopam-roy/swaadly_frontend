@@ -155,7 +155,7 @@ export default function ProductReviews({ productId, variantId }: ProductReviewsP
           <button
             onClick={loadMore}
             disabled={isLoadingMore}
-            className="px-8 py-3 border-2 border-white text-white font-medium rounded-full transition-colors cursor-pointer hover:bg-white hover:text-[#333333] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-3 border-2 border-white text-white font-medium rounded-full transition-colors cursor-pointer hover:bg-white hover:disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoadingMore ? 'Loading...' : 'Load More Reviews'}
           </button>

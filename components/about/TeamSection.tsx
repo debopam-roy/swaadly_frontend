@@ -26,10 +26,10 @@ export default function TeamSection() {
         <div className="space-y-8 md:space-y-16">
           {/* Heading */}
           <div className="text-center space-y-4 md:space-y-6">
-            <h2 className="font-shrikhand italic text-[#333] text-4xl md:text-5xl lg:text-6xl">
+            <h2 className="font-shrikhand italic text-4xl md:text-5xl lg:text-6xl">
               Meet the team
             </h2>
-            <p className="font-medium text-[#333] text-lg md:text-2xl max-w-3xl mx-auto">
+            <p className="font-medium text-lg md:text-2xl max-w-3xl mx-auto">
               Three perspectives. One shared vision. Built differently every day.
             </p>
           </div>
@@ -44,19 +44,19 @@ export default function TeamSection() {
                 {/* Initial Circle */}
                 <div className="flex justify-center">
                   <div className="bg-white border-2 border-[#333] rounded-full w-20 h-20 md:w-24 md:h-24 flex items-center justify-center">
-                    <span className="font-bold text-[#333] text-3xl md:text-4xl">
+                    <span className="font-bold text-3xl md:text-4xl">
                       {member.initial}
                     </span>
                   </div>
                 </div>
 
                 {/* Name */}
-                <h3 className="font-bold text-[#333] text-2xl md:text-3xl text-center">
+                <h3 className="font-bold text-2xl md:text-3xl text-center">
                   {member.name}
                 </h3>
 
                 {/* Description */}
-                <p className="font-medium text-[#333] text-lg md:text-xl text-center leading-relaxed">
+                <p className="font-medium text-lg md:text-xl text-center leading-relaxed">
                   {member.description}
                 </p>
               </div>

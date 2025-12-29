@@ -13,7 +13,7 @@ function FooterLink({ href, children }: FooterLinkProps) {
   return (
     <Link
       href={href}
-      className="text-[#333333] hover:text-[#C68642] transition-colors font-medium text-base md:text-lg leading-7"
+      className="hover:text-[#C68642] transition-colors font-medium text-base md:text-lg leading-7"
     >
       {children}
     </Link>
@@ -64,11 +64,11 @@ function NewsletterForm({ onSubmit }: NewsletterFormProps) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full px-6 py-4 border-2 border-[#333333] rounded-full bg-white text-[#333333] placeholder:text-[rgba(51,51,51,0.5)] focus:outline-none focus:ring-2 focus:ring-[#44c997] font-medium text-base"
+        className="w-full px-6 py-4 border-2 border-[#333333] rounded-full bg-white placeholder:text-[rgba(51,51,51,0.5)] focus:outline-none focus:ring-2 focus:ring-[#44c997] font-medium text-base"
       />
       <button
         type="submit"
-        className="w-full bg-[#44c997] hover:bg-[#3AB586] text-[#333333] font-medium text-lg py-4 rounded-full transition-colors flex items-center justify-center gap-2"
+        className="w-full bg-[#44c997] hover:bg-[#3AB586] font-medium text-lg py-4 rounded-full transition-colors flex items-center justify-center gap-2"
       >
         <Image src="/images/mail.svg" alt="" width={20} height={20} />
         Subscribe
@@ -113,7 +113,7 @@ export default function Footer({ onNewsletterSubscribe }:   FooterProps) {
               />
             </Link>
             <div className="flex flex-col gap-3 md:gap-4">
-              <p className="text-[#333333] font-medium text-lg leading-7 max-w-[254px]">
+              <p className="font-medium text-lg leading-7 max-w-[254px]">
                 India&apos;s first peanut butter brand which serves health with taste
               </p>
               <div className="flex gap-4">
@@ -141,7 +141,7 @@ export default function Footer({ onNewsletterSubscribe }:   FooterProps) {
 
           {/* Quick Links Column */}
           <div className="flex flex-col gap-6">
-            <h3 className="text-[#333333] font-bold text-2xl leading-8">
+            <h3 className="font-bold text-2xl leading-8">
               Quick Links
             </h3>
             <nav className="flex flex-col gap-4 md:gap-5">
@@ -155,7 +155,7 @@ export default function Footer({ onNewsletterSubscribe }:   FooterProps) {
 
           {/* Support Column */}
           <div className="flex flex-col gap-6">
-            <h3 className="text-[#333333] font-bold text-2xl leading-8">
+            <h3 className="font-bold text-2xl leading-8">
               Support
             </h3>
             <nav className="flex flex-col gap-4 md:gap-5">
@@ -169,10 +169,10 @@ export default function Footer({ onNewsletterSubscribe }:   FooterProps) {
 
           {/* Newsletter Column */}
           <div className="flex flex-col gap-5">
-            <h3 className="text-[#333333] font-bold text-2xl leading-8">
+            <h3 className="font-bold text-2xl leading-8">
               Stay Updated
             </h3>
-            <p className="text-[#333333] font-medium text-base leading-6 max-w-[249px]">
+            <p className="font-medium text-base leading-6 max-w-[249px]">
               Subscribe to get special offers and updates
             </p>
             <NewsletterForm onSubmit={onNewsletterSubscribe} />
@@ -183,7 +183,7 @@ export default function Footer({ onNewsletterSubscribe }:   FooterProps) {
         <div className="border-t-2 border-[#cb8435] mb-6" />
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[#333333] font-medium text-base leading-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 font-medium text-base leading-6">
           <p className="text-center md:text-left">
             © {currentYear} Spread the Taste. All rights reserved.
           </p>

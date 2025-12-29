@@ -65,7 +65,7 @@ export default function OrdersPage() {
       <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C68642] mx-auto"></div>
-          <p className="mt-4 text-[#333333]">Loading your orders...</p>
+          <p className="mt-4 ">Loading your orders...</p>
         </div>
       </div>
     );
@@ -78,7 +78,7 @@ export default function OrdersPage() {
           <p className="text-[#AA0C0C] text-lg">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 bg-[#44C997] text-[#333333] px-8 py-3 rounded-full font-medium hover:bg-[#3AB586] transition-colors"
+            className="mt-4 bg-[#44C997] px-8 py-3 rounded-full font-medium hover:bg-[#3AB586] transition-colors"
           >
             Try Again
           </button>
@@ -111,15 +111,15 @@ export default function OrdersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {orders.length === 0 ? (
             <div className="bg-white p-12 md:p-20 text-center rounded-[36px]">
-              <h2 className="text-2xl md:text-3xl font-medium text-[#333333] mb-4">
+              <h2 className="text-2xl md:text-3xl font-medium mb-4">
                 No orders yet
               </h2>
-              <p className="text-lg md:text-xl text-[#333333] mb-6">
+              <p className="text-lg md:text-xl mb-6">
                 Start shopping to see your orders here!
               </p>
               <button
                 onClick={() => router.push('/')}
-                className="bg-[#44C997] text-[#333333] font-medium text-xl px-12 py-4 rounded-[40px] hover:bg-[#3AB586] transition-colors"
+                className="bg-[#44C997] font-medium text-xl px-12 py-4 rounded-[40px] hover:bg-[#3AB586] transition-colors"
               >
                 Start Shopping
               </button>
@@ -147,19 +147,19 @@ export default function OrdersPage() {
                           </p>
                         ) : isDelivered ? (
                           <>
-                            <p className="text-lg md:text-2xl font-bold text-[#333333]">
+                            <p className="text-lg md:text-2xl font-bold ">
                               Delivered
                             </p>
-                            <p className="text-base md:text-xl font-light text-[#333333]">
+                            <p className="text-base md:text-xl font-light ">
                               Order completed
                             </p>
                           </>
                         ) : (
                           <>
-                            <p className="text-lg md:text-2xl font-medium text-[#333333]">
+                            <p className="text-lg md:text-2xl font-medium ">
                               Estimated delivery
                             </p>
-                            <p className="text-base md:text-xl font-light text-[#333333]">
+                            <p className="text-base md:text-xl font-light ">
                               {order.estimatedDelivery
                                 ? formatDate(order.estimatedDelivery)
                                 : 'To be confirmed'}
@@ -171,10 +171,10 @@ export default function OrdersPage() {
                       {/* Order Placed Date */}
                       {!isCancelled && (
                         <div className="flex flex-col gap-3">
-                          <p className="text-lg md:text-2xl font-medium text-[#333333]">
+                          <p className="text-lg md:text-2xl font-medium ">
                             Order Placed on
                           </p>
-                          <p className="text-base md:text-xl font-light text-[#333333]">
+                          <p className="text-base md:text-xl font-light ">
                             {formatDate(order.createdAt)}
                           </p>
                         </div>
@@ -182,21 +182,21 @@ export default function OrdersPage() {
 
                       {/* Total Amount */}
                       <div className="flex flex-col gap-3">
-                        <p className="text-lg md:text-2xl font-medium text-[#333333]">
+                        <p className="text-lg md:text-2xl font-medium ">
                           Total
                         </p>
-                        <p className="text-base md:text-xl font-light text-[#333333]">
+                        <p className="text-base md:text-xl font-light ">
                           ₹{order.totalAmount.toFixed(2)}
                         </p>
                       </div>
 
                       {/* Order Number */}
                       <div className="flex flex-col gap-3">
-                        <p className="text-lg md:text-2xl font-medium text-[#333333]">
+                        <p className="text-lg md:text-2xl font-medium ">
                           Order #{order.orderNumber}
                         </p>
                         <div className="flex items-center gap-2">
-                          <p className="text-base md:text-xl font-light text-[#333333]">
+                          <p className="text-base md:text-xl font-light ">
                             View Details
                           </p>
                           <svg
@@ -230,7 +230,7 @@ export default function OrdersPage() {
                           </span>
                         </div>
                         <div>
-                          <p className="text-lg md:text-xl font-medium text-[#333333]">
+                          <p className="text-lg md:text-xl font-medium ">
                             {order.itemCount} {order.itemCount === 1 ? 'item' : 'items'}
                           </p>
                           <p

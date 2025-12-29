@@ -2,6 +2,7 @@ export interface Review {
   id: string;
   reviewerName: string;
   reviewerEmail?: string;
+  reviewerAvatarUrl?: string;
   rating: number;
   title?: string;
   comment: string;

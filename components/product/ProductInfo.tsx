@@ -133,7 +133,7 @@ export default function ProductInfo({ product, selectedVariant, onVariantChange,
             </div>
           ))}
         </div>
-        <span className="font-medium text-xl md:text-2xl text-[#333333]">
+        <span className="font-medium text-xl md:text-2xl ">
           {rating.toFixed(1)}
         </span>
       </div>

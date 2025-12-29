@@ -65,7 +65,7 @@ export default function ProductsPage() {
       <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C68642] mx-auto"></div>
-          <p className="mt-4 text-[#333333]">Loading products...</p>
+          <p className="mt-4 ">Loading products...</p>
         </div>
       </div>
     );
@@ -75,11 +75,11 @@ export default function ProductsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F5E6D3]">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-[#333333] mb-2">Error</h2>
-          <p className="text-[#333333] mb-4">{error}</p>
+          <h2 className="text-2xl font-bold mb-2">Error</h2>
+          <p className="mb-4">{error}</p>
           <button
             onClick={() => router.push('/')}
-            className="px-6 py-3 bg-[#44c997] text-[#333333] rounded-full hover:bg-[#3AB586] transition-colors font-medium"
+            className="px-6 py-3 bg-[#44c997] rounded-full hover:bg-[#3AB586] transition-colors font-medium"
           >
             Go to Home
           </button>
@@ -107,7 +107,7 @@ export default function ProductsPage() {
             >
               Our Products
             </h1>
-            <p className="text-xl md:text-2xl text-[#333333] max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl max-w-2xl mx-auto">
               Discover our range of premium peanut butter products
             </p>
           </div>
@@ -119,7 +119,7 @@ export default function ProductsPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-xl text-[#333333]">No products available at the moment.</p>
+              <p className="text-xl ">No products available at the moment.</p>
             </div>
           ) : (
             <>
@@ -139,24 +139,24 @@ export default function ProductsPage() {
                   <button
                     onClick={handlePreviousPage}
                     disabled={page === 1}
-                    className="px-6 py-3 bg-white border-2 border-[#333333] rounded-full text-[#333333] font-medium hover:bg-[#F5EDE0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-3 bg-white border-2 border-[#333333] rounded-full font-medium hover:bg-[#F5EDE0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Previous
                   </button>
-                  <span className="text-[#333333] font-medium">
+                  <span className="font-medium">
                     Page {page} of {totalPages}
                   </span>
                   <button
                     onClick={handleNextPage}
                     disabled={page === totalPages}
-                    className="px-6 py-3 bg-white border-2 border-[#333333] rounded-full text-[#333333] font-medium hover:bg-[#F5EDE0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-3 bg-white border-2 border-[#333333] rounded-full font-medium hover:bg-[#F5EDE0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Next
                   </button>
                 </div>
               )}
 
-              <p className="text-center text-[#333333] mt-4">
+              <p className="text-center mt-4">
                 Showing {products.length} of {total} products
               </p>
             </>

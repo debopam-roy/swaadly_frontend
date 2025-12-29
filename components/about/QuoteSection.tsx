@@ -22,7 +22,7 @@ export default function QuoteSection() {
             {/* Card 1 */}
             <div className="bg-[#FFE4B4] border-2 border-[#333] rounded-[32px] px-6 md:px-8 py-8 md:py-9 space-y-4">
               <div className="text-5xl md:text-6xl text-center">📝</div>
-              <h3 className="font-bold text-[#333] text-xl md:text-2xl text-center">
+              <h3 className="font-bold text-xl md:text-2xl text-center">
                 Labels were confusing
               </h3>
             </div>
@@ -30,7 +30,7 @@ export default function QuoteSection() {
             {/* Card 2 */}
             <div className="bg-[#44C997] border-2 border-[#333] rounded-[32px] px-6 md:px-8 py-8 md:py-9 space-y-4">
               <div className="text-5xl md:text-6xl text-center">🤔</div>
-              <h3 className="font-bold text-[#333] text-xl md:text-2xl text-center">
+              <h3 className="font-bold text-xl md:text-2xl text-center">
                 Ingredients felt unnecessary
               </h3>
             </div>
@@ -38,7 +38,7 @@ export default function QuoteSection() {
             {/* Card 3 */}
             <div className="bg-[#FFE4B4] border-2 border-[#333] rounded-[32px] px-6 md:px-8 py-8 md:py-9 space-y-4">
               <div className="text-5xl md:text-6xl text-center">📈</div>
-              <h3 className="font-bold text-[#333] text-xl md:text-2xl text-center">
+              <h3 className="font-bold text-xl md:text-2xl text-center">
                 Designed for trends
               </h3>
             </div>
