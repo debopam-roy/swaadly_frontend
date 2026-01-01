@@ -44,14 +44,31 @@ export default function ProductGrid({ limit = 3, onAddToCart }: ProductGridProps
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onAddToCart={onAddToCart}
-        />
-      ))}
+    <div className="w-full">
+      {/* Horizontal scroll on small and tablet screens */}
+      <div className="lg:hidden overflow-x-auto scrollbar-hide -mx-4 px-4">
+        <div className="flex gap-6 w-max">
+          {products.map((product) => (
+            <div key={product.id} className="w-[280px] sm:w-[320px] shrink-0">
+              <ProductCard
+                product={product}
+                onAddToCart={onAddToCart}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Grid layout on large screens only */}
+      <div className="hidden lg:grid lg:grid-cols-3 gap-6">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            onAddToCart={onAddToCart}
+          />
+        ))}
+      </div>
     </div>
   );
 }

@@ -43,7 +43,7 @@ const faqData: FAQCategory[] = [
       },
       {
         question: 'What is the shelf life of your products?',
-        answer: 'Our peanut butter has a shelf life of 12 months from the date of manufacturing when stored properly. The best before date is clearly printed on each jar.',
+        answer: 'Our peanut butter has a shelf life of 18 months from the date of manufacturing when stored properly. The best before date is clearly printed on each jar.',
       },
       {
         question: 'Why does oil separate at the top?',
@@ -60,11 +60,11 @@ const faqData: FAQCategory[] = [
       },
       {
         question: 'How long does delivery take?',
-        answer: 'Delivery typically takes 5-7 business days depending on your location. Metro cities usually receive orders within 3-5 days. You will receive a tracking number once your order is shipped.',
+        answer: 'Delivery typically takes 5-7 business days depending on your location. Metro cities usually receive orders within 3-5 days. You will receive a tracking number once your order is shipped. NOTE:- All the above timelines are estimated not actual.',
       },
       {
         question: 'Is the packaging safe for shipping?',
-        answer: 'Yes! We use sturdy, food-grade glass jars with secure lids, packed with protective cushioning to ensure your peanut butter arrives safely without leakage or damage.',
+        answer: 'Yes! We use sturdy, food-grade IML PET plastic jars with secure lids, packed with protective cushioning and shipped in 3-layer corrugated boxes to help ensure your peanut butter reaches you safely without leakage or damage.',
       },
     ],
   },
@@ -94,15 +94,15 @@ const faqData: FAQCategory[] = [
     faqs: [
       {
         question: 'What is your return policy?',
-        answer: 'We accept returns within 7 days of delivery if the product is damaged, defective, or incorrect. The product should be unused with the seal intact. Contact our support team to initiate a return.',
+        answer: "We don't accept returns. If your product arrives damaged, leaking, or unusable, we'll provide a replacement after verification. Please contact our support team within 24 hours of delivery to initiate the replacement request.",
       },
       {
         question: 'How can I contact customer support?',
-        answer: 'You can reach us via email at support@swaadly.com or call our customer service at 1800-XXX-XXXX (Mon-Sat, 10 AM - 6 PM). We typically respond within 24 hours.',
+        answer: 'You can reach us via email at support@swaadly.com or chat support on the website. We typically respond within 24 hours.',
       },
       {
         question: 'Do you offer bulk or wholesale purchases?',
-        answer: 'Yes! We offer special pricing for bulk orders and wholesale partnerships. Please email us at wholesale@swaadly.com with your requirements, and our team will get back to you with a customized quote.',
+        answer: 'Yes! We offer special pricing for bulk orders and wholesale partnerships. Please email us at sales@swaadly.com with your requirements, and our team will get back to you with a customized quote.',
       },
     ],
   },

@@ -20,7 +20,7 @@ export default function ExploreProductsSection() {
        <div className="relative max-w-[1320px] mx-auto px-4 sm:px-8 lg:px-[60px] py-12 sm:py-16 lg:py-[100px] z-10">
         {/* Section Title */}
         <div className="flex items-center justify-center gap-2 sm:gap-5 mb-12 sm:mb-16 lg:mb-[100px]">
-          <div className="h-5 w-5 sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative shrink-0">
+          <div className="h-[20px] w-[60px] sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative shrink-0">
             <Image
               src="/images/star_divider.svg"
               alt=""
@@ -31,7 +31,7 @@ export default function ExploreProductsSection() {
           <h2 className="font-bold text-2xl sm:text-3xl lg:text-[40px] leading-tight text-center whitespace-nowrap">
             Explore our products
           </h2>
-          <div className="h-5 w-5 sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative shrink-0">
+          <div className="h-[20px] w-[60px] sm:h-[25px] sm:w-[150px] lg:h-[35px] lg:w-[342px] relative shrink-0">
             <Image
               src="/images/star_divider.svg"
               alt=""

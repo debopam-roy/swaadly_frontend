@@ -113,13 +113,13 @@ const ExploreOtherProducts: React.FC<ExploreOtherProductsProps> = ({
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
             {title}
           </h2>
           <a
             href={viewAllUrl}
-            className="bg-white border-[1] border-black rounded-[100px] px-6 sm:px-10 py-3"
+            className="hidden sm:inline-block bg-white border-[1] border-black rounded-[100px] px-6 sm:px-10 py-3"
           >
             <span className="font-bold text-sm sm:text-base">
               VIEW ALL
@@ -127,15 +127,30 @@ const ExploreOtherProducts: React.FC<ExploreOtherProductsProps> = ({
           </a>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onAddToCart={onAddToCart}
-            />
-          ))}
+        {/* Products - Horizontal scroll on all screen sizes */}
+        <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 mb-6">
+          <div className="flex gap-6 w-max">
+            {products.map((product) => (
+              <div key={product.id} className="w-[280px] sm:w-[320px] shrink-0">
+                <ProductCard
+                  product={product}
+                  onAddToCart={onAddToCart}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* View All Button - Bottom on mobile */}
+        <div className="sm:hidden flex justify-center mt-6">
+          <a
+            href={viewAllUrl}
+            className="bg-white border-[1] border-black rounded-[100px] px-10 py-3"
+          >
+            <span className="font-bold text-sm">
+              VIEW ALL
+            </span>
+          </a>
         </div>
       </div>
 
