@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { authService } from '../services/auth.service';
 import { userService } from '../services/user.service';
+import { toastService } from '../utils/toast.util';
 import type { UserWithProfile } from '../types/user.types';
 
 interface AuthContextType {
@@ -40,8 +41,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [checkAuth]);
 
   const logout = async () => {
-    await authService.logout();
-    setUser(null);
+    try {
+      await authService.logout();
+      setUser(null);
+      toastService.success('Logged out successfully');
+    } catch (error) {
+      console.error('Logout error:', error);
+      toastService.error('Failed to logout. Please try again.');
+    }
   };
 
   return (

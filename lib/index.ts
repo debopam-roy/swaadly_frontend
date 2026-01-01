@@ -15,6 +15,7 @@ export { useProtectedRoute } from './hooks/use-protected-route';
 // Utilities
 export { storage } from './utils/storage.util';
 export { httpClient } from './api/http-client';
+export { toastService } from './utils/toast.util';
 
 // Common Types
 export type {

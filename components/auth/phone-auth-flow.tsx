@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { OtpAuthForm } from './otp-auth-form';
-import { phoneAuthService } from '@/lib';
+import { phoneAuthService, toastService } from '@/lib';
 import { useAuth } from '@/lib/contexts/auth.context';
 
 /**
@@ -48,8 +48,11 @@ export function PhoneAuthFlow({ onSuccess, onError }: PhoneAuthFlowProps) {
       // Clean phone number
       const cleanPhone = phone.replace(/[\s-]/g, '');
       await phoneAuthService.requestPhoneOtp(cleanPhone);
+      toastService.success('OTP sent to your phone!');
     } catch (error: any) {
-      const err = new Error(error.response?.data?.message || error.message || 'Failed to send OTP');
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to send OTP';
+      toastService.error(errorMessage);
+      const err = new Error(errorMessage);
       onError?.(err);
       throw err;
     }
@@ -65,10 +68,14 @@ export function PhoneAuthFlow({ onSuccess, onError }: PhoneAuthFlowProps) {
       // Update auth context with user data before calling onSuccess
       await checkAuth();
 
+      toastService.success('Login successful! Welcome back.');
+
       // Success - let onSuccess callback handle navigation (e.g., to onboarding or home)
       await onSuccess?.();
     } catch (error: any) {
-      const err = new Error(error.response?.data?.message || error.message || 'Invalid OTP');
+      const errorMessage = error.response?.data?.message || error.message || 'Invalid OTP';
+      toastService.error(errorMessage);
+      const err = new Error(errorMessage);
       onError?.(err);
       throw err;
     }

@@ -7,6 +7,7 @@ import { AuthProvider } from "@/lib/contexts/auth.context";
 import { CartProvider } from "@/lib/contexts/cart.context";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { ToastProvider } from "@/components/toast-provider";
 
 const satoshi = localFont({
   src: [
@@ -61,6 +62,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <CartProvider>
+            <ToastProvider />
             <Navbar />
             {children}
             <Footer />

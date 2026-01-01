@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { OtpAuthForm } from './otp-auth-form';
-import { emailPhoneAuthService } from '@/lib';
+import { emailPhoneAuthService, toastService } from '@/lib';
 import { useAuth } from '@/lib/contexts/auth.context';
 
 /**
@@ -42,8 +42,11 @@ export function EmailAuthFlow({ onSuccess, onError }: EmailAuthFlowProps) {
   const handleRequestOtp = async (email: string) => {
     try {
       await emailPhoneAuthService.requestEmailOtp(email);
+      toastService.success('OTP sent to your email!');
     } catch (error: any) {
-      const err = new Error(error.response?.data?.message || error.message || 'Failed to send OTP');
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to send OTP';
+      toastService.error(errorMessage);
+      const err = new Error(errorMessage);
       onError?.(err);
       throw err;
     }
@@ -57,10 +60,14 @@ export function EmailAuthFlow({ onSuccess, onError }: EmailAuthFlowProps) {
       // Update auth context with user data before calling onSuccess
       await checkAuth();
 
+      toastService.success('Login successful! Welcome back.');
+
       // Success - let onSuccess callback handle navigation (e.g., to onboarding or home)
       await onSuccess?.();
     } catch (error: any) {
-      const err = new Error(error.response?.data?.message || error.message || 'Invalid OTP');
+      const errorMessage = error.response?.data?.message || error.message || 'Invalid OTP';
+      toastService.error(errorMessage);
+      const err = new Error(errorMessage);
       onError?.(err);
       throw err;
     }

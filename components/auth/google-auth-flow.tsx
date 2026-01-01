@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { GoogleAuthButton } from './google-auth-button';
 import { googleAuthService } from '@/lib/services/google-auth.service';
+import { toastService } from '@/lib';
 import { useAuth } from '@/lib/contexts/auth.context';
 
 interface GoogleAuthFlowProps {
@@ -22,10 +23,12 @@ export function GoogleAuthFlow({ onSuccess, onError }: GoogleAuthFlowProps) {
     try {
       await googleAuthService.verifyGoogleToken(credential);
       await checkAuth();
+      toastService.success('Login successful! Welcome back.');
       onSuccess?.();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Google authentication failed';
       setError(errorMessage);
+      toastService.error(errorMessage);
       onError?.(err instanceof Error ? err : new Error(errorMessage));
     } finally {
       setIsLoading(false);

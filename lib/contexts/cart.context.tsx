@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { CartItem } from '@/lib/types/cart.types';
 import { Product, ProductVariant } from '@/lib/types/product.types';
 import { CartService } from '@/lib/services/cart.service';
+import { toastService } from '@/lib/utils/toast.util';
 
 interface CartContextType {
   items: CartItem[];
@@ -47,6 +48,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addToCart = (product: Product, variant: ProductVariant, quantity: number = 1) => {
     const updatedItems = CartService.addToCart(product, variant, quantity);
     setItems(updatedItems);
+    toastService.success(`${product.name} added to cart!`, { duration: 3000 });
   };
 
   const updateQuantity = (itemId: string, quantity: number) => {
@@ -57,6 +59,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const removeItem = (itemId: string) => {
     const updatedItems = CartService.removeItem(itemId);
     setItems(updatedItems);
+    toastService.info('Item removed from cart', { duration: 3000 });
   };
 
   const clearCart = () => {
