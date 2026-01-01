@@ -7,12 +7,6 @@ export interface UserProfile {
   lastName?: string;
   displayName?: string;
   avatarUrl?: string;
-  addressLine1?: string;
-  addressLine2?: string;
-  city?: string;
-  state?: string;
-  postalCode?: string;
-  country?: string;
   dateOfBirth?: string;
   preferences: Record<string, any>;
   onboardingCompleted: boolean;
@@ -24,12 +18,6 @@ export interface UpdateUserProfileRequest {
   lastName?: string;
   displayName?: string;
   avatarUrl?: string;
-  addressLine1?: string;
-  addressLine2?: string;
-  city?: string;
-  state?: string;
-  postalCode?: string;
-  country?: string;
   dateOfBirth?: string;
   preferences?: Record<string, any>;
 }
