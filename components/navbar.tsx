@@ -149,8 +149,8 @@ function ProductsDropdown({ products, isOpen, pathname, onClose }: ProductsDropd
   if (!isOpen || products.length === 0) return null;
 
   return (
-    <div 
-      className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden"
+    <div
+      className="absolute top-full left-0 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
       role="menu"
       aria-label="Products menu"
     >
