@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useProtectedRoute } from '@/lib/hooks/use-protected-route';
 import { useAuth } from '@/lib/contexts/auth.context';
 
 interface ProfileCardProps {
@@ -51,10 +50,11 @@ function ProfileCard({ title, description, href, icon }: ProfileCardProps) {
 }
 
 export default function ProfilePage() {
-  const { isLoading } = useProtectedRoute();
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  if (isLoading) {
+  // Show loading state while checking authentication
+  // Middleware will redirect if not authenticated, but we need to wait for user data
+  if (isLoading || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-lg text-gray-600">Loading...</div>

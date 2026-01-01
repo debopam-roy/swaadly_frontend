@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { OtpAuthForm } from './otp-auth-form';
 import { phoneAuthService } from '@/lib';
+import { useAuth } from '@/lib/contexts/auth.context';
 
 /**
  * Phone Authentication Flow Component
@@ -21,6 +22,7 @@ interface PhoneAuthFlowProps {
 
 export function PhoneAuthFlow({ onSuccess, onError }: PhoneAuthFlowProps) {
   const router = useRouter();
+  const { checkAuth } = useAuth();
 
   // Phone validation (E.164 format)
   const validatePhone = (phone: string): string | null => {
@@ -60,9 +62,11 @@ export function PhoneAuthFlow({ onSuccess, onError }: PhoneAuthFlowProps) {
       const cleanPhone = phone.replace(/[\s-]/g, '');
       await phoneAuthService.verifyPhoneOtp({ phone: cleanPhone, otp });
 
-      // Success - redirect to dashboard
-      onSuccess?.();
-      router.push('/');
+      // Update auth context with user data before calling onSuccess
+      await checkAuth();
+
+      // Success - let onSuccess callback handle navigation (e.g., to onboarding or home)
+      await onSuccess?.();
     } catch (error: any) {
       const err = new Error(error.response?.data?.message || error.message || 'Invalid OTP');
       onError?.(err);

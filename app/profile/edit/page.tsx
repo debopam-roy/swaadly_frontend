@@ -2,13 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useProtectedRoute } from '@/lib/hooks/use-protected-route';
 import { userService } from '@/lib/services/user.service';
 import type { UserProfile } from '@/lib/types/user.types';
 
 export default function EditProfilePage() {
   const router = useRouter();
-  const { isLoading: authLoading } = useProtectedRoute();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
@@ -55,10 +53,8 @@ export default function EditProfilePage() {
       }
     };
 
-    if (!authLoading) {
-      fetchUserProfile();
-    }
-  }, [authLoading]);
+    fetchUserProfile();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,7 +80,7 @@ export default function EditProfilePage() {
     }
   };
 
-  if (authLoading || isLoading) {
+  if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="text-lg text-gray-600">Loading...</div>

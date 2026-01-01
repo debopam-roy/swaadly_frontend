@@ -16,9 +16,29 @@ class SecureStorage {
     }
   }
 
+  /**
+   * Set a cookie with the given name and value
+   * Used for server-side middleware access
+   */
+  private setCookie(name: string, value: string, days = 30): void {
+    if (typeof document === 'undefined') return; // Skip on server
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+  }
+
+  /**
+   * Delete a cookie with the given name
+   */
+  private deleteCookie(name: string): void {
+    if (typeof document === 'undefined') return; // Skip on server
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+  }
+
   setAccessToken(token: string): void {
     if (!this.isAvailable()) return;
     localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token);
+    this.setCookie(STORAGE_KEYS.ACCESS_TOKEN, token);
   }
 
   getAccessToken(): string | null {
@@ -29,6 +49,7 @@ class SecureStorage {
   setRefreshToken(token: string): void {
     if (!this.isAvailable()) return;
     localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, token);
+    this.setCookie(STORAGE_KEYS.REFRESH_TOKEN, token);
   }
 
   getRefreshToken(): string | null {
@@ -38,7 +59,10 @@ class SecureStorage {
 
   setUser(user: object): void {
     if (!this.isAvailable()) return;
-    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
+    const userJson = JSON.stringify(user);
+    localStorage.setItem(STORAGE_KEYS.USER, userJson);
+    // Store in cookie for middleware access
+    this.setCookie(STORAGE_KEYS.USER, userJson);
   }
 
   getUser<T>(): T | null {
@@ -52,11 +76,21 @@ class SecureStorage {
     localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.USER);
+
+    // Also clear cookies
+    this.deleteCookie(STORAGE_KEYS.ACCESS_TOKEN);
+    this.deleteCookie(STORAGE_KEYS.REFRESH_TOKEN);
+    this.deleteCookie(STORAGE_KEYS.USER);
   }
 
   clearAll(): void {
     if (!this.isAvailable()) return;
     localStorage.clear();
+
+    // Clear all auth cookies
+    this.deleteCookie(STORAGE_KEYS.ACCESS_TOKEN);
+    this.deleteCookie(STORAGE_KEYS.REFRESH_TOKEN);
+    this.deleteCookie(STORAGE_KEYS.USER);
   }
 }
 

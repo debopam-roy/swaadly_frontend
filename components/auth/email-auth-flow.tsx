@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { OtpAuthForm } from './otp-auth-form';
 import { emailPhoneAuthService } from '@/lib';
+import { useAuth } from '@/lib/contexts/auth.context';
 
 /**
  * Email Authentication Flow Component
@@ -21,6 +22,7 @@ interface EmailAuthFlowProps {
 
 export function EmailAuthFlow({ onSuccess, onError }: EmailAuthFlowProps) {
   const router = useRouter();
+  const { checkAuth } = useAuth();
 
   // Email validation
   const validateEmail = (email: string): string | null => {
@@ -52,9 +54,11 @@ export function EmailAuthFlow({ onSuccess, onError }: EmailAuthFlowProps) {
     try {
       await emailPhoneAuthService.verifyEmailOtp(email, otp);
 
-      // Success - redirect to dashboard
-      onSuccess?.();
-      router.push('/');
+      // Update auth context with user data before calling onSuccess
+      await checkAuth();
+
+      // Success - let onSuccess callback handle navigation (e.g., to onboarding or home)
+      await onSuccess?.();
     } catch (error: any) {
       const err = new Error(error.response?.data?.message || error.message || 'Invalid OTP');
       onError?.(err);
