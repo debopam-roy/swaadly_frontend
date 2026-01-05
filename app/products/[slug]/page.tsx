@@ -9,6 +9,7 @@ import ProductImageGallery from '@/components/product/ProductImageGallery';
 import ProductInfo from '@/components/product/ProductInfo';
 import ProductReviews from '@/components/product/ProductReviews';
 import ExploreOtherProducts from '@/components/product/ExploreOtherProducts';
+import EatSuggestionCard from '@/components/product/EatSuggestionCard';
 
 export default function ProductPage() {
   const params = useParams();
@@ -75,7 +76,7 @@ export default function ProductPage() {
           <p className="mb-4">{error || 'The product you are looking for does not exist.'}</p>
           <button
             onClick={() => router.push('/')}
-            className="px-6 py-3 bg-[#44c997] rounded-full hover:bg-[#3AB586] transition-colors font-medium"
+            className="px-6 py-3 bg-primary_button rounded-full hover:bg-[#3AB586] transition-colors font-medium"
           >
             Go to Home
           </button>
@@ -135,45 +136,44 @@ export default function ProductPage() {
             </div>
 
             {/* About Image */}
-            <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden">
-              <Image
-                src="https://storage.googleapis.com/swaadly-uploads-prod/peanut_butter.svg"
-                alt="Product details"
-                fill
-                className="object-cover"
-              />
-            </div>
+            {product.bestWayToEatImageUrl && (
+              <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden">
+                <Image
+                  src={product.bestWayToEatImageUrl}
+                  alt={`About ${product.name}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            )}
 
           </div>
         </section>
       )}
 
       {/* Best Ways to Eat Section */}
-      {product.bestWayToEat && (
-        <section className="min-h-screen">
-          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full">
+      <section className="py-12 md:py-16 bg-[#fcf1e2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-[40px] font-bold text-center mb-8 md:mb-10 leading-11">
+            Best ways to eat
+          </h2>
 
-            {/* Image First on Mobile, Text on Desktop */}
-            <div className="relative w-full h-full aspect-square lg:aspect-auto overflow-hidden order-2 lg:order-1">
-              <Image
-                src={product.bestWayToEatImageUrl || "https://storage.googleapis.com/swaadly-uploads-prod/best_way_to_eat.png"}
-                alt="Best ways to eat"
-                fill
-                className="object-cover"
-              />
-            </div>
-            {/* Text */}
-            <div className="flex flex-col gap-6 md:gap-8 bg-primary_button p-6 md:p-12 h-full order-1 lg:order-2">
-              <h2 className="text-2xl md:text-3xl font-bold ">
-                Best ways to eat
-              </h2>
-              <div className="flex flex-col gap-4 text-base md:text-lg leading-relaxed">
-                <p>{product.bestWayToEat}</p>
-              </div>
-            </div>
+          <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+            <EatSuggestionCard
+              imageSrc="https://storage.googleapis.com/swaadly-uploads-prod/bread_spread.png"
+              title="Spread on roti or bread"
+            />
+            <EatSuggestionCard
+              imageSrc="https://storage.googleapis.com/swaadly-uploads-prod/fruit_pair.png"
+              title="Pair with fruits"
+            />
+            <EatSuggestionCard
+              imageSrc="https://storage.googleapis.com/swaadly-uploads-prod/eat_direct.png"
+              title="Eat directly by the spoon"
+            />
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Related Products */}
       {product && (
