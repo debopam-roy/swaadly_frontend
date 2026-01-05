@@ -123,10 +123,10 @@ export default function ProductPage() {
       {/* About Section */}
       {product.aboutProduct && (
         <section className=" min-h-screen">
-          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen w-full bg-white">
 
             {/* About Text */}
-            <div className="flex flex-col gap-6 md:gap-8 bg-white p-6 md:p-12 h-full">
+            <div className="flex flex-col gap-6 md:gap-8 p-6 md:p-12 h-full">
               <h2 className="text-2xl md:text-3xl font-bold ">
                 About this product
               </h2>
