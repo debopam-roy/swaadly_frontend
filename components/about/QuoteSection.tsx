@@ -8,7 +8,7 @@ export default function QuoteSection() {
           {/* Main Quote Card */}
           <div className="bg-[#FF7E29] border-[1] border-black rounded-[40px] px-8 md:px-16 py-12 md:py-16">
             <div className="space-y-6 md:space-y-8">
-              <h2 className="font-shrikhand italic text-white text-3xl md:text-5xl lg:text-[56px] leading-tight text-center">
+              <h2 className="font-shrikhand text-white text-3xl md:text-5xl lg:text-[56px] leading-tight text-center">
                 "Why has food become something we need to decode?"
               </h2>
               <p className="font-medium text-white/90 text-lg md:text-2xl leading-relaxed text-center max-w-4xl mx-auto">

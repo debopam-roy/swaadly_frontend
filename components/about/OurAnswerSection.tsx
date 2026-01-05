@@ -8,27 +8,34 @@ export default function OurAnswerSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Image */}
-          <div className="relative order-2 lg:order-1">
+          <div className="relative order-1 lg:order-1">
             {/* Rotated Background */}
             <div className="absolute inset-0 rotate-3 bg-[#FFE4B4] rounded-[40px] -z-10 scale-105" />
 
             {/* Image Container */}
             <div className="absolute left-0 -top-7 -right-6 -bottom-1 bg-background rounded-[40px] -bg-conic-120 -rotate-3" />
-            <div className="relative border-[1] border-black rounded-[40px] overflow-hidden">
+            <div className="relative border-[1] border-black rounded-[40px] overflow-hidden aspect-square">
+              {/* Desktop Image */}
               <Image
-                src="https://storage.googleapis.com/swaadly-uploads-prod/hero_background.png"
+                src="/db/hero_bg_desktop.png"
                 alt="Swaadly peanut butter jars"
-                width={628}
-                height={504}
-                className="w-full h-auto object-cover"
+                fill
+                className="hidden md:block object-cover"
+              />
+              {/* Mobile Image */}
+              <Image
+                src="/db/hero_bg_mobile.png"
+                alt="Swaadly peanut butter jars"
+                fill
+                className="md:hidden object-cover"
               />
             </div>
           </div>
 
           {/* Right Content */}
-          <div className="space-y-6 md:space-y-8 order-1 lg:order-2">
+          <div className="space-y-6 md:space-y-8 order-2 lg:order-2">
             {/* Heading */}
-            <h2 className="font-shrikhand italic text-4xl md:text-5xl lg:text-6xl leading-tight">
+            <h2 className="font-shrikhand text-4xl md:text-5xl lg:text-6xl leading-tight">
               Our answer? Simple.
             </h2>
 

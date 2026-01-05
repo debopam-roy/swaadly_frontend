@@ -26,7 +26,7 @@ export default function TeamSection() {
         <div className="space-y-8 md:space-y-16">
           {/* Heading */}
           <div className="text-center space-y-4 md:space-y-6">
-            <h2 className="font-shrikhand italic text-4xl md:text-5xl lg:text-6xl">
+            <h2 className="font-shrikhand text-4xl md:text-5xl lg:text-6xl">
               Meet the team
             </h2>
             <p className="font-medium text-lg md:text-2xl max-w-3xl mx-auto">

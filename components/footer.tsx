@@ -84,7 +84,7 @@ function NewsletterForm({ onSubmit }: NewsletterFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 md:gap-4 w-full">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 md:gap-4 w-full" suppressHydrationWarning>
       <input
         type="email"
         placeholder="Enter your email"
@@ -137,7 +137,7 @@ export default function Footer({ onNewsletterSubscribe }:   FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#FFF] overflow-hidden border-t border-var(--primary_button)">
+    <footer className="relative bg-white z-2 overflow-hidden border-t border-var(--primary_button)">
       {/* Background Decorative Image */}
       <div className="absolute inset-x-0 top-0 pointer-events-none w-full">
         <Image

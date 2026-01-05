@@ -14,7 +14,7 @@ export default function VisionSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
         <div className="space-y-8 md:space-y-12">
           {/* Heading */}
-          <h2 className="font-shrikhand italic text-4xl md:text-5xl lg:text-6xl text-center">
+          <h2 className="font-shrikhand text-4xl md:text-5xl lg:text-6xl text-center">
             Our Vision
           </h2>
 

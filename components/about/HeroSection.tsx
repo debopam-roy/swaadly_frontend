@@ -20,13 +20,13 @@ export default function AboutHeroSection() {
 
             {/* Heading */}
             <div>
-              <h1 className="font-shrikhand italic text-4xl md:text-6xl lg:text-7xl leading-tight">
+              <h1 className="font-shrikhand text-4xl md:text-6xl lg:text-7xl leading-tight">
                 Three friends.
               </h1>
-              <h1 className="font-shrikhand italic text-4xl md:text-6xl lg:text-7xl leading-tight">
+              <h1 className="font-shrikhand text-4xl md:text-6xl lg:text-7xl leading-tight">
                 One question.
               </h1>
-              <h1 className="font-shrikhand italic text-4xl md:text-6xl lg:text-7xl leading-tight">
+              <h1 className="font-shrikhand text-4xl md:text-6xl lg:text-7xl leading-tight">
                 Real swaad.
               </h1>
             </div>

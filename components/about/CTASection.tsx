@@ -8,7 +8,7 @@ export default function CTASection() {
       <div className=" mx-auto px-4 sm:px-6 lg:px-16">
         <div className="mx-auto space-y-6 md:space-y-8 text-center">
           {/* Heading */}
-          <h2 className="font-shrikhand italic text-4xl md:text-5xl ">
+          <h2 className="font-shrikhand text-4xl md:text-5xl ">
             Ready to taste the difference?
           </h2>
 
