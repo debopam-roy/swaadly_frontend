@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Product, ProductVariant } from '@/lib/types/product.types';
 import { useCart } from '@/lib/contexts/cart.context';
+import { toastService } from '@/lib/utils/toast.util';
 import QuantitySelector from './QuantitySelector';
 
 interface ProductInfoProps {
@@ -48,8 +49,10 @@ export default function ProductInfo({ product, selectedVariant, onVariantChange,
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
+      toastService.success('Link copied to clipboard');
     } catch (err) {
       console.error('Failed to copy URL:', err);
+      toastService.error('Failed to copy link');
     }
   };
 
