@@ -1,19 +1,16 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useCart } from '@/lib/contexts/cart.context';
 import type { CartSummary } from '@/lib/types/cart.types';
 import CartItem from '@/components/cart/CartItem';
-import CouponSection from '@/components/cart/CouponSection';
 import PriceDetails from '@/components/cart/PriceDetails';
 import ExploreOtherProducts from '@/components/product/ExploreOtherProducts';
 
 export default function CartPage() {
   const router = useRouter();
   const { items: cartItems, updateQuantity, removeItem } = useCart();
-  const [appliedCoupon, setAppliedCoupon] = useState<string>('');
 
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
     updateQuantity(itemId, newQuantity);
@@ -21,11 +18,6 @@ export default function CartPage() {
 
   const handleRemoveItem = (itemId: string) => {
     removeItem(itemId);
-  };
-
-  const handleApplyCoupon = (code: string) => {
-    setAppliedCoupon(code);
-    // TODO: Validate and apply coupon logic
   };
 
   const handleAddToCart = async (productId: string) => {
@@ -39,7 +31,7 @@ export default function CartPage() {
     router.push('/checkout');
   };
 
-  // Calculate cart summary
+  // Calculate cart summary (coupon discount is now handled in checkout)
   const calculateSummary = (): CartSummary => {
     const totalMRP = cartItems.reduce(
       (sum, item) => sum + item.variant.mrp * item.quantity,
@@ -50,13 +42,12 @@ export default function CartPage() {
         sum + (item.variant.mrp - item.variant.sellingPrice) * item.quantity,
       0
     );
-    const couponDiscount = appliedCoupon ? 100 : 0; // Mock coupon discount
-    const subtotal = totalMRP - discountOnMRP - couponDiscount;
+    const subtotal = totalMRP - discountOnMRP;
 
     return {
       totalMRP,
       discountOnMRP,
-      couponDiscount,
+      couponDiscount: 0, // Coupons are now applied at checkout
       subtotal,
       deliveryDays: 7,
     };
@@ -119,11 +110,32 @@ export default function CartPage() {
                   ))}
                 </div>
 
-                {/* Coupon Section */}
-                <CouponSection
-                  onApplyCoupon={handleApplyCoupon}
-                  appliedCoupon={appliedCoupon}
-                />
+                {/* Coupon Info Banner */}
+                <div className="bg-white p-4 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#FFF2EA] rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg
+                        className="w-5 h-5 text-[#FF7E29]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-medium">Have a coupon code?</p>
+                      <p className="text-sm text-gray-500">
+                        Apply coupons at checkout to get discounts
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Price Details */}
                 <PriceDetails
