@@ -3,45 +3,36 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/lib/contexts/auth.context';
+import { Package, MapPin, UserPen, ChevronRight, type LucideIcon } from 'lucide-react';
 
 interface ProfileCardProps {
   title: string;
   description: string;
   href: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
 }
 
-function ProfileCard({ title, description, href, icon }: ProfileCardProps) {
+function ProfileCard({ title, description, href, icon: Icon }: ProfileCardProps) {
   return (
     <Link href={href} className="block">
-      <div className="bg-white hover:shadow-lg transition-all rounded-2xl md:rounded-3xl overflow-hidden flex items-stretch shadow-md cursor-pointer group">
+      <div className="bg-white hover:shadow-lg transition-all rounded-xl md:rounded-2xl lg:rounded-3xl overflow-hidden flex items-stretch shadow-sm cursor-pointer group">
         {/* Left peanut section with icon */}
-        <div className="bg-[var(--peanut)] w-20 md:w-48 flex items-center justify-center p-3 md:p-6 shrink-0">
-          <div className="text-white scale-75 md:scale-100">
-            {icon}
-          </div>
+        <div className="bg-[var(--peanut)] w-16 sm:w-20 md:w-28 lg:w-36 min-h-[70px] sm:min-h-[80px] md:min-h-[90px] lg:min-h-[100px] shrink-0 flex items-center justify-center">
+          <Icon className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-white" strokeWidth={1.5} />
         </div>
 
         {/* Right white section with text */}
-        <div className="flex-1 p-4 md:p-8 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg md:text-3xl font-semibold mb-1 md:mb-2 text-black">{title}</h2>
-            <p className="text-gray-600 text-xs md:text-base">{description}</p>
+        <div className="flex-1 p-3 sm:p-4 md:p-5 lg:p-6 flex items-center justify-between min-w-0">
+          <div className="flex-1 min-w-0 mr-2">
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-0.5 md:mb-1 text-gray-900 truncate">
+              {title}
+            </h2>
+            <p className="text-gray-500 text-xs sm:text-sm md:text-base line-clamp-1">
+              {description}
+            </p>
           </div>
-          <div className="ml-3 md:ml-6 shrink-0">
-            <svg
-              className="w-5 h-5 md:w-8 md:h-8 text-gray-400 group-hover:translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
+          <div className="shrink-0">
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-400 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </div>
@@ -53,7 +44,6 @@ export default function ProfilePage() {
   const { user, isLoading } = useAuth();
 
   // Show loading state while checking authentication
-  // Middleware will redirect if not authenticated, but we need to wait for user data
   if (isLoading || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -81,38 +71,26 @@ export default function ProfilePage() {
               Hello, {user?.profile.displayName}
             </h1>
 
-            <div className="space-y-3 md:space-y-6">
+            <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
               <ProfileCard
                 title="Your Orders"
                 description="Track or buy things again"
                 href="/orders"
-                icon={
-                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                }
+                icon={Package}
               />
 
               <ProfileCard
                 title="Your Addresses"
                 description="Edit or add new address"
                 href="/profile/addresses"
-                icon={
-                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  </svg>
-                }
+                icon={MapPin}
               />
 
               <ProfileCard
                 title="Update your profile"
                 description="Edit your details"
                 href="/profile/edit"
-                icon={
-                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                }
+                icon={UserPen}
               />
             </div>
           </div>
@@ -121,7 +99,7 @@ export default function ProfilePage() {
           <div className="flex items-center justify-center mt-4 md:mt-0">
             <div className="relative w-full h-64 md:h-full min-h-[400px]">
               <Image
-                src="https://storage.googleapis.com/swaadly-uploads-prod/peanut_butter.svg"
+                src="https://storage.googleapis.com/swaadly-uploads-prod/Profile_page_image.png"
                 alt="Peanut Butter Products"
                 fill
                 className="object-contain"

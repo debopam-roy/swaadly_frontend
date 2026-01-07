@@ -161,7 +161,7 @@ export default function CartPage() {
       <section>
         <div className="relative w-full h-[400px] md:h-[500px] lg:h-[682px] overflow-hidden">
           <Image
-            src="https://storage.googleapis.com/swaadly-uploads-prod/peanut_butter.svg"
+            src="https://storage.googleapis.com/swaadly-uploads-prod/peanut_butter.png"
             alt="Swaadly Peanut Butter"
             fill
             className="object-cover"

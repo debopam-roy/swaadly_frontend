@@ -22,6 +22,7 @@ export default function EditProfilePage() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    displayName: '',
     dateOfBirth: '',
   });
 
@@ -44,6 +45,7 @@ export default function EditProfilePage() {
         setFormData({
           firstName: data.profile.firstName || '',
           lastName: data.profile.lastName || '',
+          displayName: data.profile.displayName || '',
           dateOfBirth: formattedDate,
         });
       } catch (err) {
@@ -146,6 +148,7 @@ export default function EditProfilePage() {
       const updatePayload: any = {
         firstName: formData.firstName.trim(),
         lastName: formData.lastName.trim(),
+        displayName: formData.displayName.trim() || undefined,
       };
 
       if (formData.dateOfBirth) {
@@ -282,6 +285,25 @@ export default function EditProfilePage() {
                   className="w-full rounded-xl md:rounded-2xl border border-gray-300 bg-white px-4 md:px-5 py-3 md:py-3.5 text-sm md:text-base text-gray-900 placeholder-gray-400 focus:border-[#6B8E23] focus:outline-none focus:ring-2 focus:ring-[#6B8E23]/20 transition-all"
                   placeholder="Sharma"
                   required
+                />
+              </div>
+
+              {/* Display Name */}
+              <div>
+                <label
+                  htmlFor="displayName"
+                  className="block text-xs md:text-sm font-medium text-gray-700 mb-2"
+                >
+                  Display Name
+                </label>
+                <input
+                  type="text"
+                  id="displayName"
+                  name="displayName"
+                  value={formData.displayName}
+                  onChange={handleChange}
+                  className="w-full rounded-xl md:rounded-2xl border border-gray-300 bg-white px-4 md:px-5 py-3 md:py-3.5 text-sm md:text-base text-gray-900 placeholder-gray-400 focus:border-[#6B8E23] focus:outline-none focus:ring-2 focus:ring-[#6B8E23]/20 transition-all"
+                  placeholder="arpit_sharma"
                 />
               </div>
 

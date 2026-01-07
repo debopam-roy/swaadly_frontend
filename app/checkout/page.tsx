@@ -63,10 +63,13 @@ export default function CheckoutPage() {
   const cartItemsForValidation: CartItemForValidation[] = useMemo(() => {
     return cartItems.map((item) => ({
       productId: item.product.id,
+      variantId: item.variant.id,
       variantSku: item.variant.sku,
       productName: item.product.name,
       quantity: item.quantity,
       unitPrice: item.variant.sellingPrice,
+      unitMrp: item.variant.mrp,
+      tags: item.product.tags,
     }));
   }, [cartItems]);
 

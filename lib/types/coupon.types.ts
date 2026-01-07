@@ -29,10 +29,13 @@ export enum CouponErrorCode {
 // Cart item for validation request
 export interface CartItemForValidation {
   productId: string;
+  variantId: string;
   variantSku: string;
   productName: string;
   quantity: number;
   unitPrice: number;
+  unitMrp: number;
+  tags?: string[];
 }
 
 // Request to validate a coupon
