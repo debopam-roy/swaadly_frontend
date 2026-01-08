@@ -35,7 +35,7 @@ export default function ContactPage() {
           </header>
 
           {/* Contact Cards Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 px-0 md:px-8 lg:px-15">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 px-0 md:px-8 lg:px-15">
             {/* Email Card */}
             <div className="bg-white border-[1px] border-black rounded-[32px] p-6 md:p-8 lg:p-10 shadow-[4px_4px_0px_0px_#333] hover:shadow-[6px_6px_0px_0px_#333] transition-shadow">
               <div className="flex flex-col gap-4">
@@ -107,6 +107,42 @@ export default function ContactPage() {
                     A 38 Ujjawal Vihar<br />
                     Borkheda, Kota<br />
                     Rajasthan - 324002<br />
+                    India
+                  </address>
+                </div>
+              </div>
+            </div>
+
+            {/* Registered Address Card */}
+            <div className="bg-white border-[1px] border-black rounded-[32px] p-6 md:p-8 lg:p-10 shadow-[4px_4px_0px_0px_#333] hover:shadow-[6px_6px_0px_0px_#333] transition-shadow">
+              <div className="flex flex-col gap-4">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-[#FFE4B4] rounded-full flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-7 h-7 md:w-8 md:h-8 text-[#C68642]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <h2 className="font-medium text-xl md:text-2xl text-[#333]">
+                    Registered Office
+                  </h2>
+                  <p className="text-sm md:text-base text-[#666] leading-relaxed">
+                    Our registered office address is:
+                  </p>
+                  <address className="not-italic text-[#333] font-medium text-base md:text-lg leading-relaxed mt-2">
+                    A-804, Four Season<br />
+                    Rajeev Gandhi, Vigyan Nagar<br />
+                    Kota, Rajasthan - 324005<br />
                     India
                   </address>
                 </div>
