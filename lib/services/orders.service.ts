@@ -4,6 +4,7 @@ import type {
   OrdersResponse,
   OrderTracking,
   QueryOrdersParams,
+  CreateOrderRequest,
 } from '../types/order.types';
 
 class OrdersService {
@@ -38,6 +39,14 @@ class OrdersService {
    */
   async getOrderTracking(id: string): Promise<OrderTracking> {
     return httpClient.get<OrderTracking>(`${this.basePath}/${id}/tracking`, { requiresAuth: true });
+  }
+
+  /**
+   * Create a new order from checkout
+   * Handles cart items, address, coupon, and delivery option
+   */
+  async createOrder(data: CreateOrderRequest): Promise<Order> {
+    return httpClient.post<Order>(this.basePath, data, { requiresAuth: true });
   }
 
   /**

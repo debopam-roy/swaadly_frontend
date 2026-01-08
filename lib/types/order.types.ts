@@ -129,3 +129,24 @@ export interface QueryOrdersParams {
   page?: number;
   limit?: number;
 }
+
+/**
+ * Cart item for order creation
+ */
+export interface OrderItemRequest {
+  productId: string;
+  variantId: string;
+  quantity: number;
+}
+
+/**
+ * Request payload for creating a new order
+ */
+export interface CreateOrderRequest {
+  addressId: string;
+  items: OrderItemRequest[];
+  couponCode?: string;
+  deliveryOptionId?: string;
+  orderNotes?: string;
+  deliveryNotes?: string;
+}
