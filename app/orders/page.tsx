@@ -21,6 +21,8 @@ export default function OrdersPage() {
           sortBy: 'createdAt',
           sortOrder: 'desc',
         });
+        console.log('Orders API response:', response);
+        console.log('Orders array:', response.orders);
         setOrders(response.orders);
       } catch (err) {
         console.error('Failed to fetch orders:', err);

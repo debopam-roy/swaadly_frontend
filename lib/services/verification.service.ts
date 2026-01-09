@@ -22,7 +22,8 @@ class VerificationService {
   async requestEmailVerification(email: string): Promise<{ message: string }> {
     const response = await httpClient.post<{ message: string }>(
       '/verification/email/request-otp',
-      { email }
+      { email },
+      { requiresAuth: true }
     );
     return response;
   }
@@ -41,7 +42,7 @@ class VerificationService {
     const response = await httpClient.post<{
       message: string;
       emailVerified: boolean;
-    }>('/verification/email/verify', { email, otp });
+    }>('/verification/email/verify', { email, otp }, { requiresAuth: true });
     return response;
   }
 
@@ -54,7 +55,8 @@ class VerificationService {
   async requestPhoneVerification(phone: string): Promise<{ message: string }> {
     const response = await httpClient.post<{ message: string }>(
       '/verification/phone/request-otp',
-      { phone }
+      { phone },
+      { requiresAuth: true }
     );
     return response;
   }
@@ -73,7 +75,7 @@ class VerificationService {
     const response = await httpClient.post<{
       message: string;
       phoneVerified: boolean;
-    }>('/verification/phone/verify', { phone, otp });
+    }>('/verification/phone/verify', { phone, otp }, { requiresAuth: true });
     return response;
   }
 }

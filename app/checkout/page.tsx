@@ -16,7 +16,7 @@ import type { DeliveryOption, WarehouseConfig } from '@/lib/types/shipping.types
 export default function CheckoutPage() {
   const router = useRouter();
   const { items: cartItems, subtotal, clearCart } = useCart();
-  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
 
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
@@ -27,11 +27,10 @@ export default function CheckoutPage() {
   const [warehouseConfig, setWarehouseConfig] = useState<WarehouseConfig | null>(null);
   const [isLoadingWarehouse, setIsLoadingWarehouse] = useState(true);
 
-  // Delivery options state
-  const [deliveryOptions, setDeliveryOptions] = useState<DeliveryOption[]>([]);
-  const [selectedDeliveryOptionId, setSelectedDeliveryOptionId] = useState<string | null>(null);
-  const [isLoadingDeliveryRates, setIsLoadingDeliveryRates] = useState(false);
-  const [deliveryRatesError, setDeliveryRatesError] = useState<string | null>(null);
+  // Delivery state - auto-selected best option
+  const [bestDeliveryOption, setBestDeliveryOption] = useState<DeliveryOption | null>(null);
+  const [isLoadingDelivery, setIsLoadingDelivery] = useState(false);
+  const [deliveryError, setDeliveryError] = useState<string | null>(null);
 
   // Order placement state
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
@@ -59,7 +58,7 @@ export default function CheckoutPage() {
         setWarehouseConfig(config);
       } catch (error) {
         console.error('Failed to fetch warehouse config:', error);
-        setDeliveryRatesError('Unable to load shipping configuration. Please refresh the page.');
+        setDeliveryError('Unable to load shipping configuration. Please refresh the page.');
       } finally {
         setIsLoadingWarehouse(false);
       }
@@ -96,7 +95,6 @@ export default function CheckoutPage() {
   // Calculate total weight in grams
   const totalWeight = useMemo(() => {
     return cartItems.reduce((sum, item) => {
-      // Convert weight to grams based on unit
       let weightInGrams = item.variant.weight;
       if (item.variant.weightUnit.toLowerCase() === 'kg') {
         weightInGrams = item.variant.weight * 1000;
@@ -105,20 +103,19 @@ export default function CheckoutPage() {
     }, 0);
   }, [cartItems]);
 
-  // Fetch delivery rates when address is selected and warehouse config is loaded
+  // Fetch delivery rates and auto-select best option when address is selected
   useEffect(() => {
-    const fetchDeliveryRates = async () => {
+    const fetchAndSelectBestDelivery = async () => {
       if (!selectedAddressId || cartItems.length === 0 || !warehouseConfig) {
-        setDeliveryOptions([]);
-        setSelectedDeliveryOptionId(null);
+        setBestDeliveryOption(null);
         return;
       }
 
       const address = addresses.find((a) => a.id === selectedAddressId);
       if (!address) return;
 
-      setIsLoadingDeliveryRates(true);
-      setDeliveryRatesError(null);
+      setIsLoadingDelivery(true);
+      setDeliveryError(null);
 
       try {
         const rates = await shippingService.getDeliveryRates({
@@ -128,21 +125,41 @@ export default function CheckoutPage() {
           orderAmount: subtotal,
         });
 
-        setDeliveryOptions(rates);
-        // Auto-select recommended option or first option
-        const recommended = rates.find((r) => r.recommended);
-        setSelectedDeliveryOptionId(recommended?.id || rates[0]?.id || null);
+        if (rates.length === 0) {
+          setDeliveryError('No delivery options available for this location');
+          setBestDeliveryOption(null);
+          return;
+        }
+
+        // Auto-select best option: lowest price, then fastest delivery
+        const parseDays = (time: string): number => {
+          const match = time.match(/(\d+)/);
+          return match ? parseInt(match[1], 10) : 999;
+        };
+
+        const best = rates.reduce((bestOption, current) => {
+          const bestDays = parseDays(bestOption.deliveryTime);
+          const currentDays = parseDays(current.deliveryTime);
+
+          // If prices are equal, prefer faster delivery
+          if (current.price === bestOption.price) {
+            return currentDays < bestDays ? current : bestOption;
+          }
+          // Otherwise prefer lower price
+          return current.price < bestOption.price ? current : bestOption;
+        }, rates[0]);
+
+        setBestDeliveryOption(best);
       } catch (error) {
         console.error('Failed to fetch delivery rates:', error);
-        setDeliveryRatesError('Unable to fetch delivery rates. Please try again.');
-        setDeliveryOptions([]);
-        setSelectedDeliveryOptionId(null);
+        setDeliveryError('Unable to calculate delivery rates. Please try again.');
+        setBestDeliveryOption(null);
       } finally {
-        setIsLoadingDeliveryRates(false);
+        setIsLoadingDelivery(false);
       }
     };
 
-    fetchDeliveryRates();
+    fetchAndSelectBestDelivery();
   }, [selectedAddressId, addresses, cartItems.length, totalWeight, subtotal, warehouseConfig]);
 
   // Convert cart items to validation format
@@ -159,11 +176,6 @@ export default function CheckoutPage() {
     }));
   }, [cartItems]);
 
-  // Get selected delivery option
-  const selectedDeliveryOption = useMemo(() => {
-    return deliveryOptions.find((opt) => opt.id === selectedDeliveryOptionId) || null;
-  }, [deliveryOptions, selectedDeliveryOptionId]);
-
   // Calculate totals
   const calculations = useMemo(() => {
     const totalMRP = cartItems.reduce(
@@ -177,8 +189,7 @@ export default function CheckoutPage() {
     );
     const couponDiscount = appliedCoupon?.discountAmount || 0;
     const subtotalAfterDiscount = subtotal - couponDiscount;
-    // Use real delivery fee from selected option, fallback to 0 if loading
-    const deliveryFee = selectedDeliveryOption?.price || 0;
+    const deliveryFee = bestDeliveryOption?.price || 0;
     const total = subtotalAfterDiscount + deliveryFee;
 
     return {
@@ -189,18 +200,21 @@ export default function CheckoutPage() {
       deliveryFee,
       total,
     };
-  }, [cartItems, subtotal, appliedCoupon, selectedDeliveryOption]);
+  }, [cartItems, subtotal, appliedCoupon, bestDeliveryOption]);
 
   const handleCouponApplied = (coupon: AppliedCoupon | null) => {
     setAppliedCoupon(coupon);
   };
 
-  const selectedAddress = addresses.find((a) => a.id === selectedAddressId);
-
   // Place order handler
   const handlePlaceOrder = async () => {
-    if (!selectedAddressId || !selectedDeliveryOptionId) {
-      setOrderError('Please select a delivery address and delivery option.');
+    if (!selectedAddressId) {
+      setOrderError('Please select a delivery address.');
+      return;
+    }
+
+    if (!bestDeliveryOption) {
+      setOrderError('Unable to calculate delivery. Please try again.');
       return;
     }
 
@@ -216,7 +230,6 @@ export default function CheckoutPage() {
           quantity: item.quantity,
         })),
         couponCode: appliedCoupon?.code,
-        deliveryOptionId: selectedDeliveryOptionId,
       };
 
       const order = await ordersService.createOrder(orderData);
@@ -227,11 +240,27 @@ export default function CheckoutPage() {
       // Redirect to order confirmation page
       router.push(`/orders/${order.id}/confirmation`);
     } catch (error: unknown) {
-      console.error('Failed to place order:', error);
+      console.error('Failed to place order:', JSON.stringify(error, null, 2));
+      console.error('Error object:', error);
+
+      // Check if it's a verification required error
+      const apiError = error as { statusCode?: number; message?: string; code?: string };
+
+      // Check for verification required - by code or by message content
+      const isVerificationRequired =
+        apiError.code === 'VERIFICATION_REQUIRED' ||
+        (apiError.statusCode === 403 && apiError.message?.toLowerCase().includes('verification required'));
+
+      if (isVerificationRequired) {
+        // Redirect to verification page
+        router.push('/verify?redirect=/checkout');
+        return;
+      }
+
       const errorMessage =
         error instanceof Error
           ? error.message
-          : 'Failed to place order. Please try again.';
+          : apiError.message || 'Failed to place order. Please try again.';
       setOrderError(errorMessage);
     } finally {
       setIsPlacingOrder(false);
@@ -415,98 +444,6 @@ export default function CheckoutPage() {
                 onCouponApplied={handleCouponApplied}
                 isAuthenticated={isAuthenticated}
               />
-
-              {/* Delivery Options */}
-              <div className="bg-white rounded-xl overflow-hidden">
-                <div className="p-4 md:p-6 border-b border-gray-100">
-                  <h3 className="text-lg md:text-xl font-medium">
-                    Delivery Options
-                  </h3>
-                </div>
-
-                <div className="p-4 md:p-6">
-                  {isLoadingWarehouse ? (
-                    <div className="flex items-center justify-center py-8">
-                      <div className="w-8 h-8 border-2 border-[#44C997] border-t-transparent rounded-full animate-spin" />
-                      <span className="ml-3 text-gray-600">
-                        Loading shipping configuration...
-                      </span>
-                    </div>
-                  ) : !selectedAddressId ? (
-                    <p className="text-gray-500 text-center py-4">
-                      Please select a delivery address to view delivery options
-                    </p>
-                  ) : isLoadingDeliveryRates ? (
-                    <div className="flex items-center justify-center py-8">
-                      <div className="w-8 h-8 border-2 border-[#44C997] border-t-transparent rounded-full animate-spin" />
-                      <span className="ml-3 text-gray-600">
-                        Calculating delivery rates...
-                      </span>
-                    </div>
-                  ) : deliveryRatesError ? (
-                    <div className="text-center py-4">
-                      <p className="text-red-500 mb-2">{deliveryRatesError}</p>
-                      <button
-                        onClick={() => {
-                          // Trigger re-fetch by toggling address
-                          const currentId = selectedAddressId;
-                          setSelectedAddressId(null);
-                          setTimeout(() => setSelectedAddressId(currentId), 100);
-                        }}
-                        className="text-sm text-[#44C997] hover:underline"
-                      >
-                        Try Again
-                      </button>
-                    </div>
-                  ) : deliveryOptions.length === 0 ? (
-                    <p className="text-gray-500 text-center py-4">
-                      No delivery options available for this location
-                    </p>
-                  ) : (
-                    <div className="space-y-3">
-                      {deliveryOptions.map((option) => (
-                        <label
-                          key={option.id}
-                          className={`flex items-center justify-between p-4 border rounded-lg cursor-pointer transition-colors ${
-                            selectedDeliveryOptionId === option.id
-                              ? 'border-[#44C997] bg-green-50'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="radio"
-                              name="deliveryOption"
-                              value={option.id}
-                              checked={selectedDeliveryOptionId === option.id}
-                              onChange={() =>
-                                setSelectedDeliveryOptionId(option.id)
-                              }
-                              className="w-4 h-4 text-[#44C997] focus:ring-[#44C997]"
-                            />
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <span className="font-medium">{option.name}</span>
-                                {option.recommended && (
-                                  <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
-                                    Recommended
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-sm text-gray-500">
-                                Estimated: {option.deliveryTime}
-                              </p>
-                            </div>
-                          </div>
-                          <span className="font-medium">
-                            ₹{option.price.toFixed(2)}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
             </div>
 
             {/* Right Column - Order Summary */}
@@ -536,14 +473,23 @@ export default function CheckoutPage() {
                     )}
                     <div className="flex justify-between">
                       <span className="text-gray-600">Delivery Fee</span>
-                      <span>
-                        {calculations.deliveryFee === 0 ? (
-                          <span className="text-green-600">FREE</span>
-                        ) : (
-                          `₹${calculations.deliveryFee.toFixed(2)}`
-                        )}
-                      </span>
+                      {isLoadingWarehouse || isLoadingDelivery ? (
+                        <span className="text-gray-400 text-xs">Calculating...</span>
+                      ) : deliveryError ? (
+                        <span className="text-red-500 text-xs">Error</span>
+                      ) : !selectedAddressId ? (
+                        <span className="text-gray-400 text-xs">Select address</span>
+                      ) : calculations.deliveryFee === 0 ? (
+                        <span className="text-green-600">FREE</span>
+                      ) : (
+                        <span>₹{calculations.deliveryFee.toFixed(2)}</span>
+                      )}
                     </div>
+                    {bestDeliveryOption && (
+                      <div className="text-xs text-gray-500 pl-2">
+                        via {bestDeliveryOption.name} ({bestDeliveryOption.deliveryTime})
+                      </div>
+                    )}
                   </div>
 
                   <div className="border-t border-gray-200 mt-4 pt-4">
@@ -564,13 +510,30 @@ export default function CheckoutPage() {
                     )}
                   </div>
 
+                  {deliveryError && selectedAddressId && (
+                    <div className="mt-4 p-3 bg-red-50 rounded-lg">
+                      <p className="text-sm text-red-600">{deliveryError}</p>
+                      <button
+                        onClick={() => {
+                          const currentId = selectedAddressId;
+                          setSelectedAddressId(null);
+                          setTimeout(() => setSelectedAddressId(currentId), 100);
+                        }}
+                        className="text-xs text-red-700 underline mt-1"
+                      >
+                        Try again
+                      </button>
+                    </div>
+                  )}
+
                   <button
                     onClick={handlePlaceOrder}
                     disabled={
                       !selectedAddressId ||
-                      !selectedDeliveryOptionId ||
+                      !bestDeliveryOption ||
                       isPlacingOrder ||
-                      isLoadingDeliveryRates
+                      isLoadingDelivery ||
+                      isLoadingWarehouse
                     }
                     className="w-full mt-6 py-4 bg-[#44C997] text-white font-medium rounded-xl hover:bg-[#3AB586] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
@@ -593,12 +556,6 @@ export default function CheckoutPage() {
                   {!selectedAddressId && (
                     <p className="text-sm text-red-500 text-center mt-2">
                       Please select a delivery address
-                    </p>
-                  )}
-
-                  {selectedAddressId && !selectedDeliveryOptionId && !isLoadingDeliveryRates && (
-                    <p className="text-sm text-red-500 text-center mt-2">
-                      Please select a delivery option
                     </p>
                   )}
                 </div>

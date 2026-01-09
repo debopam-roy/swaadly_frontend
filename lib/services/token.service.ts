@@ -15,20 +15,24 @@ interface RefreshTokenRequest {
 class TokenService {
   /**
    * Refresh access token using refresh token
-   * @returns New access token
+   * @returns New tokens
    */
-  async refreshAccessToken(): Promise<{ accessToken: string }> {
+  async refreshAccessToken(): Promise<{ accessToken: string; refreshToken: string }> {
     const refreshToken = storage.getRefreshToken();
     if (!refreshToken) {
       throw new Error('No refresh token available');
     }
 
-    const response = await httpClient.post<{ accessToken: string }>(
+    const response = await httpClient.post<{ accessToken: string; refreshToken: string }>(
       '/auth/refresh',
       { refreshToken } as RefreshTokenRequest
     );
 
+    // Save both tokens (refresh token is rotated on backend)
     storage.setAccessToken(response.accessToken);
+    if (response.refreshToken) {
+      storage.setRefreshToken(response.refreshToken);
+    }
     return response;
   }
 

@@ -127,10 +127,16 @@ class HttpClient {
   private async handleErrorResponse(response: Response): Promise<ApiError> {
     try {
       const errorData = await response.json();
+
+      // Handle nested message object (NestJS ForbiddenException with object payload)
+      const messageData = errorData.message;
+      const isNestedMessage = typeof messageData === 'object' && messageData !== null;
+
       return {
         statusCode: response.status,
-        message: errorData.message || 'An error occurred',
+        message: isNestedMessage ? messageData.message : (messageData || 'An error occurred'),
         error: errorData.error,
+        code: isNestedMessage ? messageData.code : errorData.code,
       };
     } catch {
       return {
