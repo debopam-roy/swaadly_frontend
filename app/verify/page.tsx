@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/contexts/auth.context';
 import { verificationService } from '@/lib/services/verification.service';
@@ -10,7 +10,7 @@ import { Mail, Phone, CheckCircle, ArrowLeft, ShieldCheck, Plus } from 'lucide-r
 
 type VerificationStep = 'select' | 'email-otp' | 'phone-input' | 'phone-otp';
 
-export default function VerifyPage() {
+function VerifyPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, isLoading: authLoading, isAuthenticated, checkAuth } = useAuth();
@@ -576,5 +576,21 @@ export default function VerifyPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+function VerifyPageLoading() {
+  return (
+    <main className="min-h-screen flex items-center justify-center">
+      <div className="w-12 h-12 border-4 border-[#44C997] border-t-transparent rounded-full animate-spin" />
+    </main>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={<VerifyPageLoading />}>
+      <VerifyPageContent />
+    </Suspense>
   );
 }
